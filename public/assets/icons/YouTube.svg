@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="YouTube">
+  <defs>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fff"/><stop offset=".48" stop-color="#f9f9fb"/><stop offset="1" stop-color="#b8bdc5"/>
+    </linearGradient>
+    <linearGradient id="disc" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#ff7669"/><stop offset=".5" stop-color="#f0444b"/><stop offset="1" stop-color="#ca1d37"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fff"/><stop offset="1" stop-color="#edf0f4"/>
+    </linearGradient>
+    <radialGradient id="gloss" cx=".35" cy="0" r=".95">
+      <stop stop-color="#fff" stop-opacity=".5"/><stop offset=".65" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="9" stdDeviation="5" flood-opacity=".42"/>
+    </filter>
+    <filter id="glyph-shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#7f0e21" flood-opacity=".45"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <circle cx="256" cy="250" r="231" fill="url(#rim)" stroke="#9499a1" stroke-width="2"/>
+    <circle cx="256" cy="250" r="210" fill="url(#disc)"/>
+    <circle cx="256" cy="250" r="208" fill="url(#gloss)"/>
+  </g>
+  <g filter="url(#glyph-shadow)">
+    <rect x="117" y="169" width="278" height="162" rx="42" fill="url(#plate)"/>
+    <path d="M227 202q0-13 11-7l102 53q10 5 0 11l-102 53q-11 6-11-7z" fill="#e63443"/>
+  </g>
+</svg>

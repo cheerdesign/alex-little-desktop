@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#aaa0c1">
+  <meta name="description" content="Alex’s little desktop. Get to know me, browse my photos and favorites, or leave a little mark of your own.">
+  <title>Alex · A little corner of the internet</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23529fe9'/%3E%3Cpath d='M20 23v6m24-6v6M18 39q14 13 28 0' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="yosemite-chrome.css">
+  <link rel="stylesheet" href="notes.css">
+  <link rel="stylesheet" href="photos.css">
+  <link rel="stylesheet" href="books.css">
+  <link rel="stylesheet" href="music.css">
+  <link rel="stylesheet" href="movies.css">
+  <link rel="stylesheet" href="games.css">
+  <link rel="stylesheet" href="windows.css">
+  <script src="notes.js" defer></script>
+  <script src="photos-data.js" defer></script>
+  <script src="photos.js" defer></script>
+  <script src="books-data.js" defer></script>
+  <script src="books.js" defer></script>
+  <script src="music-data.js" defer></script>
+  <script src="music.js" defer></script>
+  <script src="movies-data.js" defer></script>
+  <script src="movies.js" defer></script>
+  <script src="games.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="wallpaper" aria-hidden="true"></div>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="apple-mark" viewBox="0 0 24 24"><path d="M16.2 2.3c.1 1.7-.6 3-1.5 3.9-1 .9-2.4 1.6-3.9 1.5-.1-1.6.7-3 1.6-3.8 1-1 2.5-1.7 3.8-1.6Zm3.5 15.3c-.5 1.2-.8 1.7-1.4 2.7-.9 1.3-2.1 3-3.6 3-1.3 0-1.6-.9-3.4-.9-1.7 0-2.1.9-3.4.9-1.5 0-2.7-1.5-3.6-2.8-2.5-3.5-3-8-.8-10.4 1.4-1.7 3.6-2.6 5.7-2 1 .3 1.8.8 2.6.8.7 0 1.8-.7 3-1 1.9-.3 3.7.4 4.9 1.8-4.3 2.4-3.7 7 .0 8Z"/></symbol>
+      <symbol id="smile" viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="6"/><path d="M8 8V10M16 8V10M7.5 14Q12 18.5 16.5 14"/></symbol>
+      <symbol id="arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7H17V17"/></symbol>
+      <symbol id="finder-about" viewBox="0 0 20 20"><circle cx="10" cy="6" r="3"/><path d="M4 17v-2a6 6 0 0 1 12 0v2Z"/></symbol>
+      <symbol id="finder-applications" viewBox="0 0 20 20"><path d="M4 17 11 3M9 3l7 14M3 12h14"/><path d="m10 3 1-1 1 1M8 3l1-1 1 1"/></symbol>
+      <symbol id="finder-desktop" viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="11" rx="1"/><path d="M2 11h16M7 17h6M10 14v3"/></symbol>
+      <symbol id="finder-folder" viewBox="0 0 20 20"><path d="M2 5h6l2 2h8v10H2Z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="menu-bar">
+    <details class="system-menu" id="system-menu">
+      <summary aria-label="Desktop menu"><svg class="apple-mark" aria-hidden="true"><use href="#apple-mark"/></svg></summary>
+      <div class="system-dropdown">
+        <button data-open="alex">About Alex…</button>
+        <hr>
+        <button data-open="photos">Photos</button>
+        <button data-open="collection">Books</button>
+        <button data-open="music">Music</button>
+        <button data-open="youtube">YouTube</button>
+        <hr>
+        <button data-open="play">Games</button>
+        <button data-open="guestbook">Notes & drawings</button>
+        <hr>
+        <button id="show-desktop">Show desktop</button>
+      </div>
+    </details>
+    <nav class="top-apps" aria-label="Main navigation"><button data-open="photos">Photos</button><button data-open="collection">Books</button><button data-open="music">Music</button><button data-open="youtube">YouTube</button><button data-open="play">Games</button><button data-open="guestbook">Notes</button></nav>
+    <div class="menu-status">
+      <svg class="bluetooth" viewBox="0 0 12 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" aria-hidden="true"><path d="M1 5L11 15 6 20V2L11 7 1 17"/></svg>
+      <svg class="wifi" viewBox="0 0 26 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 5Q13-4 25 5M4.5 9Q13 2.5 21.5 9M8 13Q13 9 18 13"/><path d="M11 16Q13 14.5 15 16L13 19Z" fill="currentColor" stroke="none"/></svg>
+      <svg class="battery" viewBox="0 0 29 15" aria-hidden="true"><rect x="1" y="1" width="24" height="13" rx="1.6" stroke="currentColor" stroke-width="1.25" fill="none"/><rect x="3.2" y="3.2" width="19.6" height="8.6" fill="currentColor"/><path d="M27 5V10" stroke="currentColor" stroke-width="2.2"/></svg>
+      <time id="menu-clock"></time>
+      <button class="status-user" data-open="alex" aria-label="About Alex">Alex</button>
+      <svg class="spotlight" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="9" r="6.3"/><path d="M13.5 13.5L20.5 20.5" stroke-linecap="square"/></svg>
+      <svg class="notification-center" viewBox="0 0 24 19" fill="currentColor" aria-hidden="true"><path d="M1 2H3.5V4.5H1ZM1 8H3.5V10.5H1ZM1 14H3.5V16.5H1ZM6.5 2H24V4.5H6.5ZM6.5 8H20V10.5H6.5ZM6.5 14H24V16.5H6.5Z"/></svg>
+    </div>
+  </header>
+
+  <main class="desktop">
+    <button class="desktop-folder" data-open="alex" data-finder-initial="welcome" aria-label="Welcome!" aria-haspopup="dialog">
+      <img src="assets/icons/Folder.png" alt="" width="256" height="256" draggable="false">
+      <span>Welcome!</span>
+    </button>
+    <div class="dock-area">
+      <nav class="dock" aria-label="Desktop apps">
+        <button class="dock-app" data-open="alex" aria-label="Finder" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/finder.png" alt="" width="512" height="512" draggable="false"><span>Finder</span><i></i></button>
+        <button class="dock-app" data-open="photos" aria-label="Photos" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Photos.png" alt="" width="1024" height="1024" draggable="false"><span>Photos</span><i></i></button>
+        <button class="dock-app" data-open="collection" aria-label="Books" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Ibooks.png" alt="" width="512" height="512" draggable="false"><span>Books</span><i></i></button>
+        <button class="dock-app" data-open="music" aria-label="Music" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Music.svg" alt="" width="512" height="512" draggable="false"><span>Music</span><i></i></button>
+        <button class="dock-app" data-open="youtube" aria-label="YouTube" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/YouTube.svg" alt="" width="512" height="512" draggable="false"><span>YouTube</span><i></i></button>
+        <button class="dock-app" data-open="play" aria-label="Games" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/gamecenter.png" alt="" width="512" height="512" draggable="false"><span>Games</span><i></i></button>
+        <span class="dock-divider" aria-hidden="true"></span>
+        <button class="dock-app" data-open="guestbook" aria-label="Notes · Guestbook and drawings" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Notes.png" alt="" width="512" height="512" draggable="false"><span>Notes</span><i></i></button>
+      </nav>
+    </div>
+  </main>
+
+  <div id="window-layer"></div>
+  <template id="window-template">
+  <dialog class="app-window" aria-modal="false">
+    <div class="window-toolbar">
+      <div class="traffic-lights"><button class="traffic red" aria-label="Close window" data-close><span>×</span></button><button class="traffic yellow" aria-label="Minimize window" data-minimize><span>−</span></button><button class="traffic green" aria-label="Maximize window" data-maximize><span>+</span></button></div>
+      <h2 class="window-title"></h2><button class="mobile-close" data-close aria-label="Close window">Done</button>
+    </div>
+    <div class="window-content"></div>
+    <div class="window-status"><span data-window-status></span><span>Made with a little love ♡</span></div>
+  </dialog>
+  </template>
+
+  <template id="view-alex">
+    <div class="finder-layout">
+      <nav class="finder-sidebar" aria-label="Finder locations">
+        <div class="finder-sidebar-heading">Favorites</div>
+        <button data-finder-page="about" aria-current="page"><svg aria-hidden="true"><use href="#finder-about"/></svg><span>About</span></button>
+        <button data-finder-page="applications"><svg aria-hidden="true"><use href="#finder-applications"/></svg><span>Applications</span></button>
+        <button data-finder-page="desktop"><svg aria-hidden="true"><use href="#finder-desktop"/></svg><span>Desktop</span></button>
+      </nav>
+      <div class="finder-main">
+        <section class="finder-pane" aria-label="About" tabindex="0"></section>
+        <div class="finder-path" aria-hidden="true"><svg><use href="#finder-folder"/></svg><span>Alex</span><span class="finder-path-separator">›</span><span data-finder-location>About</span></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="finder-about-content">
+    <section class="about-intro"><div class="avatar"><img class="app-icon" src="assets/icons/finder.png" alt="" width="512" height="512" draggable="false"><span>☺</span></div><h3>Hi, I’m Alex<span class="text-dot">.</span></h3></section>
+    <div class="about-copy"><p>I like wandering around the city, photographing everyday life, and playing a newly discovered song on repeat late at night.</p><p>This is my little room on the internet.<br>A place for things I love and small moments I want to remember.</p></div>
+    <div class="section-heading"><h4>Find me elsewhere</h4></div>
+    <!-- Prototype destinations; replace with Alex's profile URLs when available. -->
+    <nav class="social-links" aria-label="Social media">
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.snapchat.com/" target="_blank" rel="noopener noreferrer">Snapchat</a>
+      <a href="https://discord.com/" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TikTok</a>
+    </nav>
+  </template>
+
+  <template id="finder-applications-content">
+    <div class="finder-app-grid" aria-label="Applications">
+      <button data-open="photos" aria-haspopup="dialog"><img src="assets/icons/Photos.png" alt="" width="64" height="64" draggable="false"><span>Photos</span></button>
+      <button data-open="collection" aria-haspopup="dialog"><img src="assets/icons/Ibooks.png" alt="" width="64" height="64" draggable="false"><span>Books</span></button>
+      <button data-open="music" aria-haspopup="dialog"><img src="assets/icons/Music.svg" alt="" width="64" height="64" draggable="false"><span>Music</span></button>
+      <button data-open="youtube" aria-haspopup="dialog"><img src="assets/icons/YouTube.svg" alt="" width="64" height="64" draggable="false"><span>YouTube</span></button>
+      <button data-open="play" aria-haspopup="dialog"><img src="assets/icons/gamecenter.png" alt="" width="64" height="64" draggable="false"><span>Games</span></button>
+      <button data-open="guestbook" aria-haspopup="dialog"><img src="assets/icons/Notes.png" alt="" width="64" height="64" draggable="false"><span>Notes</span></button>
+    </div>
+  </template>
+
+  <template id="finder-desktop-content">
+    <div class="finder-app-grid" aria-label="Desktop items">
+      <button data-finder-page="welcome"><img src="assets/icons/Folder.png" alt="" width="64" height="64" draggable="false"><span>Welcome!</span></button>
+    </div>
+  </template>
+
+  <template id="finder-welcome-content">
+    <div class="finder-app-grid" aria-label="Files in Welcome!">
+      <button data-open="textedit" aria-label="Open Welcome.txt" aria-haspopup="dialog"><img src="assets/icons/blank-text-file.svg" alt="" width="64" height="64" draggable="false"><span>Welcome.txt</span></button>
+    </div>
+  </template>
+
+  <template id="view-textedit">
+    <article class="textedit-document" aria-label="Welcome.txt contents"><pre data-text-file aria-live="polite">Opening Welcome.txt…</pre></article>
+  </template>
+
+  <template id="view-photos">
+    <div class="photos-app">
+      <div class="photos-toolbar">
+        <label class="photos-size"><svg viewBox="0 0 20 16" aria-hidden="true"><rect x="1" y="1" width="18" height="14" rx="1"/><path d="m2 12 5-5 4 4 3-3 4 4"/><circle cx="14" cy="5" r="1"/></svg><input type="range" min="90" max="200" step="10" value="140" aria-label="Photo thumbnail size"></label>
+        <div class="photos-view-control" role="group" aria-label="Photo view"><button data-photo-view="moments" aria-pressed="true">Moments</button><button data-photo-view="all" aria-pressed="false">All Photos</button></div>
+        <span class="photos-count">25 Photos</span>
+        <button class="photos-back photos-button" data-photo-action="back" hidden><span aria-hidden="true">‹</span> Photos</button>
+        <span class="photos-position" aria-live="polite" hidden></span>
+        <div class="photos-navigation" hidden><button class="photos-button" data-photo-action="previous" aria-label="Previous photo">‹</button><button class="photos-button" data-photo-action="next" aria-label="Next photo">›</button></div>
+      </div>
+      <div class="photos-library" aria-label="Photo library"></div>
+      <div class="photos-viewer" tabindex="-1" aria-label="Photo viewer" hidden><img alt="" draggable="false"></div>
+    </div>
+  </template>
+
+  <template id="view-collection">
+    <div class="books-app">
+      <div class="books-toolbar">
+        <span class="books-library-label">Library</span>
+        <div class="books-view-control" role="group" aria-label="Library view"><button data-books-view="grid" aria-pressed="true">All Books</button><button data-books-view="list" aria-pressed="false">List</button></div>
+        <label class="books-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="m12 12 5 5"/></svg><input type="search" placeholder="Search" aria-label="Search books"></label>
+        <button class="books-back" data-books-action="back" hidden><span aria-hidden="true">‹</span> All Books</button>
+        <span class="books-detail-heading" hidden>Book Details</span>
+      </div>
+      <section class="books-library" aria-label="Book library">
+        <div class="books-sort-row"><label>Sort By <select aria-label="Sort books"><option value="shelf">My Books</option><option value="title">Title</option><option value="author">Author</option></select></label></div>
+        <div class="books-grid"></div>
+        <p class="books-empty" hidden>No books found.</p>
+      </section>
+      <section class="books-detail" tabindex="-1" aria-label="Book details" hidden></section>
+    </div>
+  </template>
+
+  <template id="view-play">
+    <div class="games-app">
+      <header class="games-switcher" aria-label="Choose a game">
+        <button class="games-switch-button" data-games-action="previous" aria-label="Previous game" title="Previous game">‹</button>
+        <div class="games-heading"><span class="games-kicker">GAME CENTER <span class="games-position"></span></span><h3 class="games-title"></h3><p class="games-description"></p><div class="games-dots" aria-label="Games"></div></div>
+        <button class="games-switch-button" data-games-action="next" aria-label="Next game" title="Next game">›</button>
+      </header>
+      <div class="games-stage" aria-live="off"></div>
+    </div>
+  </template>
+
+  <template id="view-youtube">
+    <div class="movies-app">
+      <div class="movies-site-header">
+        <div class="movies-brand" aria-label="Alex Tube"><span>Alex</span><span>Tube</span></div>
+        <form class="movies-search" role="search"><input type="search" placeholder="Search movies" aria-label="Search movies"><button type="submit">Search</button></form>
+      </div>
+      <div class="movies-library">
+        <main class="movies-main">
+          <div class="movies-grid" aria-label="Movies"></div>
+          <p class="movies-empty" hidden>No movies match your search.</p>
+        </main>
+      </div>
+      <section class="movies-detail" aria-label="Movie preview" hidden>
+        <div class="movies-detail-top"><button class="movies-back" data-movie-action="back"><span aria-hidden="true">‹</span> Back to movies</button></div>
+        <div class="movies-detail-layout"><div class="movies-detail-main"><div class="movies-stage"><img class="movies-stage-art" alt="" draggable="false"><div class="movies-stage-shade"></div><div class="movies-stage-copy"><strong></strong></div><button class="movies-stage-play" data-movie-action="play" aria-label="Play preview"><span aria-hidden="true">▶</span></button></div><div class="movies-player-controls"><button data-movie-action="play" aria-label="Play preview"><span class="movies-play-glyph" aria-hidden="true">▶</span></button><time class="movies-elapsed">0:00</time><input class="movies-seek" type="range" min="0" max="20" step="0.1" value="0" aria-label="Preview position"><time class="movies-duration">0:20</time></div><div class="movies-film-info"><h3></h3><p class="movies-film-meta"></p><p class="movies-film-description"></p></div></div></div>
+      </section>
+    </div>
+  </template>
+
+  <template id="view-music">
+    <div class="music-app">
+      <audio preload="none"></audio>
+      <div class="music-player" aria-label="Music player">
+        <div class="music-transport" role="group" aria-label="Playback controls">
+          <button class="music-icon-button music-shuffle" data-music-action="shuffle" aria-label="Shuffle" aria-pressed="false" title="Shuffle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h3c4 0 8 12 12 12h3m-4-4 4 4-4 4M3 18h3c1 0 2-1 3-3m6-6c1-2 2-3 3-3h3m-4-4 4 4-4 4"/></svg></button>
+          <button class="music-icon-button" data-music-action="previous" aria-label="Previous song" title="Previous song"><svg class="music-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h3v14H4zm16 0v14L8 12z"/></svg></button>
+          <button class="music-icon-button music-main-play" data-music-action="play" aria-label="Play" title="Play"><svg class="music-filled music-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 3 15 9-15 9z"/></svg><svg class="music-filled music-pause-icon" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M5 3h5v18H5zm9 0h5v18h-5z"/></svg></button>
+          <button class="music-icon-button" data-music-action="next" aria-label="Next song" title="Next song"><svg class="music-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 12 7-12 7zm13 0h3v14h-3z"/></svg></button>
+          <button class="music-icon-button music-repeat" data-music-action="repeat" aria-label="Repeat song" aria-pressed="false" title="Repeat song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10V8a3 3 0 0 1 3-3h13m-4-4 4 4-4 4M20 14v2a3 3 0 0 1-3 3H4m4-4-4 4 4 4"/></svg></button>
+        </div>
+        <div class="music-now-playing">
+          <img class="music-now-art" alt="" width="56" height="56">
+          <div class="music-now-info"><strong class="music-now-title"></strong><span class="music-now-subtitle">Preview</span><div class="music-progress"><time class="music-elapsed">0:00</time><input class="music-seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Playback position" disabled><time class="music-duration">0:00</time></div></div>
+        </div>
+        <div class="music-volume-control"><button class="music-icon-button" data-music-action="mute" aria-label="Mute" title="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l5-4v14l-5-4H3z"/><path class="music-volume-waves" d="M16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="music-volume-muted" d="m16 9 6 6m0-6-6 6" hidden/></svg></button><input class="music-volume" type="range" min="0" max="1" step="0.05" value="0.7" aria-label="Volume"></div>
+      </div>
+      <div class="music-message" role="status" hidden><span></span><button data-music-action="retry">Try again</button></div>
+      <section class="music-library" aria-label="Songs">
+        <table class="music-song-table"><thead><tr><th class="music-number-heading" scope="col"><span class="music-sr-only">Track</span></th><th scope="col">Name</th><th class="music-time-heading" scope="col">Time</th><th class="music-store-heading" scope="col"><span class="music-sr-only">Full song</span></th></tr></thead><tbody></tbody></table>
+      </section>
+    </div>
+  </template>
+
+  <template id="view-guestbook">
+    <div class="notes-app is-editor">
+      <aside class="notes-sidebar">
+        <div class="notes-sidebar-toolbar"><button class="notes-button" data-note-action="new"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H3v13h13v-5M7 13l1-4 8-8 3 3-8 8Z"/></svg>New note</button></div>
+        <nav class="notes-list" aria-label="Notes"></nav>
+      </aside>
+      <section class="notes-editor" aria-label="Note editor">
+        <div class="notes-editor-toolbar">
+          <button class="notes-button notes-back" data-note-action="list"><span aria-hidden="true">‹</span> Notes</button>
+          <button class="notes-button notes-mobile-new" data-note-action="new" aria-label="New note"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H3v13h13v-5M7 13l1-4 8-8 3 3-8 8Z"/></svg></button>
+          <button class="notes-button" data-note-action="draw" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m3 13 10-10 4 4L7 17H3ZM11 5l4 4M3 13l4 4"/></svg>Draw</button>
+          <button class="notes-button notes-post" data-note-action="post" hidden>Post note</button>
+          <button class="notes-button" data-note-action="edit" hidden>Edit</button>
+          <button class="notes-button" data-note-action="delete" hidden>Delete</button>
+        </div>
+        <div class="notes-message" role="status" hidden><span></span><button class="notes-button" data-note-action="retry">Retry</button></div>
+        <div class="notes-paper">
+          <input class="note-title" aria-label="Note title" placeholder="New note" maxlength="140" autocomplete="off">
+          <p class="note-signature"><span class="note-author"></span><span class="note-author-separator"> · </span><time class="note-date"></time></p>
+          <textarea class="note-body" aria-label="Note text" placeholder="Start writing…" maxlength="10000" spellcheck="true"></textarea>
+          <section class="notes-sketch" aria-label="Drawing">
+            <div class="drawing-controls" aria-label="Drawing tools" hidden>
+              <div class="drawing-tools"><button class="notes-button" data-note-tool="pen" aria-pressed="true">Pen</button><button class="notes-button" data-note-tool="eraser" aria-pressed="false">Eraser</button></div>
+              <div class="drawing-colors" aria-label="Ink color">
+                <button data-note-color="#333333" style="--ink:#333333" aria-label="Black ink" aria-pressed="true"></button>
+                <button data-note-color="#2875c7" style="--ink:#2875c7" aria-label="Blue ink" aria-pressed="false"></button>
+                <button data-note-color="#c94f45" style="--ink:#c94f45" aria-label="Red ink" aria-pressed="false"></button>
+                <button data-note-color="#b28723" style="--ink:#b28723" aria-label="Gold ink" aria-pressed="false"></button>
+              </div>
+              <div class="drawing-history"><button class="notes-button" data-note-action="undo" aria-label="Undo drawing" title="Undo drawing">↶</button><button class="notes-button" data-note-action="redo" aria-label="Redo drawing" title="Redo drawing">↷</button></div>
+            </div>
+            <canvas class="note-canvas" width="960" height="540" role="img" aria-label="Handwritten drawing in this note">A drawing accompanies this note.</canvas>
+            <p class="drawing-hint" hidden>Draw with your finger, mouse, or pen.</p>
+          </section>
+        </div>
+      </section>
+    </div>
+  </template>
+</body>
+</html>

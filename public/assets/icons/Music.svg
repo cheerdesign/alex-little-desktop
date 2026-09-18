@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".48" stop-color="#f9f9fb"/><stop offset="1" stop-color="#b8bdc5"/></linearGradient>
+    <linearGradient id="disc" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fa7278"/><stop offset=".48" stop-color="#ed445b"/><stop offset="1" stop-color="#ce244a"/></linearGradient>
+    <linearGradient id="note" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e3e7ec"/></linearGradient>
+    <radialGradient id="gloss" cx=".35" cy="0" r=".95"><stop stop-color="#fff" stop-opacity=".5"/><stop offset=".65" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="9" stdDeviation="5" flood-opacity=".42"/></filter>
+    <filter id="note-shadow" x="-15%" y="-10%" width="130%" height="125%"><feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#811029" flood-opacity=".55"/></filter>
+  </defs>
+  <g filter="url(#shadow)"><circle cx="256" cy="250" r="231" fill="url(#rim)" stroke="#9499a1" stroke-width="2"/><circle cx="256" cy="250" r="210" fill="url(#disc)"/><circle cx="256" cy="250" r="208" fill="url(#gloss)"/></g>
+  <path d="M218 159L355 126Q366 123 366 136V311C366 334 343 350 318 350C297 350 282 340 282 326C282 307 304 293 334 294V197L234 221V345C234 369 211 385 185 385C164 385 149 375 149 361C149 341 172 327 201 328V180Q201 164 218 159Z" fill="url(#note)" filter="url(#note-shadow)"/>
+</svg>

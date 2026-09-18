@@ -1,0 +1,256 @@
+/* OS X 10.10 chrome: compact menu bar, edge-attached glass Dock,
+   independent icon silhouettes, and floating desktop tooltips. */
+.app-icon{display:block;object-fit:contain;user-select:none}
+:root{--menu-height:24px;--menu-font-size:13px;--dock-icon-size:58px}
+.menu-bar{height:calc(var(--menu-height) + env(safe-area-inset-top));padding:env(safe-area-inset-top) 18px 0 12px;gap:0;background:rgba(249,240,246,.84);color:#302a30;border:0;box-shadow:0 1px 0 #00000017,0 1px 3px #00000010;backdrop-filter:blur(24px) saturate(110%);-webkit-backdrop-filter:blur(24px) saturate(110%);font-family:"Helvetica Neue",Helvetica,-apple-system,"PingFang SC",sans-serif;z-index:5}
+.menu-bar button,.menu-bar a{color:inherit;border-radius:0;height:100%;background:transparent;line-height:1;white-space:nowrap;text-decoration:none}
+.top-apps{height:100%;display:flex;align-items:stretch}
+.top-apps button,.top-apps a{padding:0 11px}
+.top-apps a{display:flex;align-items:center}
+.top-apps button,.top-apps a,.menu-bar .status-user,#menu-clock{font-family:inherit;font-size:var(--menu-font-size);font-weight:400;letter-spacing:0;line-height:1}
+.top-apps button:hover,.top-apps a:hover{background:rgba(0,0,0,.075)}
+.menu-bar button:focus-visible,.menu-bar a:focus-visible,.system-menu summary:focus-visible{outline:2px solid #267bd9;outline-offset:-2px}
+.menu-status{height:100%;gap:14px;margin-left:auto;color:inherit;flex-shrink:0}
+.menu-status svg{opacity:1;flex-shrink:0}
+/* Keep optional system indicators available for a future iteration. */
+.menu-status .bluetooth,.menu-status .wifi,.menu-status .battery{display:none}
+.bluetooth{width:8px;height:16px}.menu-status .wifi{width:18px;height:15px}.battery{width:22px;height:12px}.spotlight{width:15px;height:15px}.notification-center{width:18px;height:15px}
+.menu-bar .status-user{font-weight:700;padding:0 2px;min-width:33px}
+.status-user:hover{background:rgba(0,0,0,.075)}
+.system-menu{height:100%;position:relative;flex-shrink:0}
+.system-menu summary{list-style:none;height:100%;width:33px;display:grid;place-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.system-menu summary::-webkit-details-marker{display:none}
+.apple-mark{width:15px;height:17px;fill:currentColor;transform:translateY(-1px)}
+.system-menu[open] summary{background:linear-gradient(#4798f2,#1479e6);color:white}
+.system-dropdown{position:absolute;left:0;top:100%;width:216px;padding:5px 0;border-radius:0 0 4px 4px;border:1px solid #00000030;border-top:0;background:rgba(248,247,243,.95);color:#232323;box-shadow:0 6px 16px #00000038;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px)}
+.menu-bar .system-dropdown button,.menu-bar .system-dropdown a{display:block;width:100%;text-align:left;padding:6px 20px;height:auto;min-height:27px;font-size:13px;line-height:1.25}
+.system-dropdown button:hover,.system-dropdown button:focus-visible,.system-dropdown a:hover,.system-dropdown a:focus-visible{background:#2689ed;color:#fff;outline:none}
+.system-dropdown hr{height:1px;border:0;margin:5px 0;background:#0000001c}
+.desktop{height:calc(100svh - var(--menu-height) - env(safe-area-inset-top));min-height:0}
+.desktop-folder{position:absolute;top:22px;right:26px;width:88px;padding:4px;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;color:white;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:500;line-height:1.4;user-select:none}
+.desktop-folder img{display:block;width:64px;height:64px;object-fit:contain;border-radius:4px;filter:drop-shadow(0 2px 1px #0003)}
+.desktop-folder>span{padding:1px 5px;border-radius:3px;text-shadow:0 1px 2px #000b,0 0 4px #0008}
+.desktop-folder:hover img{background:#ffffff18}
+.desktop-folder:focus{outline:none}
+.desktop-folder:focus>span,.desktop-folder:active>span{background:#316ac7;text-shadow:none}
+.desktop-folder:focus-visible img{outline:2px solid #ffffffa6;outline-offset:2px;background:#ffffff20}
+.desktop-folder:active img{filter:brightness(.88) drop-shadow(0 2px 1px #0003)}
+.dock-area{bottom:0;width:auto;max-width:none;z-index:3}
+.dock-hint{font-size:12px;margin:0 0 18px;letter-spacing:.025em;white-space:nowrap;opacity:.85;transition:opacity .15s}
+.dock{align-items:flex-end;justify-content:center;gap:6px;padding:6px 9px 5px;border:1px solid #ffffff65;border-bottom:0;border-radius:5px 5px 0 0;background:linear-gradient(180deg,rgba(222,227,233,.57),rgba(203,211,222,.44));backdrop-filter:blur(22px) saturate(120%);-webkit-backdrop-filter:blur(22px) saturate(120%);box-shadow:0 -1px 0 #0000000a,0 -3px 14px #12203915,inset 0 1px 0 #ffffff35;overflow:visible}
+.dock-app{width:var(--dock-icon-size);height:calc(var(--dock-icon-size) + 7px);padding:0;background:transparent;display:block;border-radius:3px;isolation:isolate;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.dock-app>.app-icon{width:var(--dock-icon-size);height:var(--dock-icon-size);max-width:none;aspect-ratio:1;transform-origin:center bottom;filter:drop-shadow(0 2px 1px #17233066);transition:transform .18s ease,filter .18s ease;will-change:transform}
+.dock-app>span{position:absolute;bottom:calc(100% + 19px);left:50%;transform:translateX(-50%) translateY(3px);width:max-content;max-width:160px;margin:0;padding:5px 11px;background:rgba(248,248,249,.96);color:#24242b;font-size:13px;line-height:1.25;letter-spacing:0;text-shadow:none;border:1px solid #bbbbc180;border-radius:4px;box-shadow:0 2px 6px #0003;opacity:0;pointer-events:none;transition:opacity .12s,transform .12s}
+.dock-app>span:after{content:"";position:absolute;width:7px;height:7px;background:#f8f8f9;left:calc(50% - 4px);bottom:-4px;border-right:1px solid #bbbbc180;border-bottom:1px solid #bbbbc180;transform:rotate(45deg)}
+.dock-app>i{position:absolute;bottom:0;left:calc(50% - 2px);width:4px;height:4px;margin:0;background:#26323d;box-shadow:0 1px 0 #ffffff30;opacity:0}
+.dock-app.is-active>i{opacity:1}
+.dock-app:focus-visible{outline:2px solid #176bc7;outline-offset:2px}
+.dock-app:focus-visible>span{opacity:1;transform:translateX(-50%) translateY(0)}
+.dock-app:active>.app-icon{transform:scale(.94);filter:brightness(.8) drop-shadow(0 1px 1px #17233066)}
+.dock-divider{height:43px;align-self:center;flex:0 0 1px;margin:0 12px;background:#485165a8;box-shadow:1px 0 0 #ffffff80}
+.desktop-footer{bottom:14px;font-size:10px;letter-spacing:.08em;pointer-events:none}
+.desktop-footer>span:last-child{font-size:11px}
+@media(min-width:601px) and (hover:hover) and (pointer:fine){
+  .dock-app:hover>.app-icon{transform:translateY(-5px) scale(1.24);filter:drop-shadow(0 5px 3px #17233066)}
+  .dock-app:has(+ .dock-app:hover)>.app-icon,.dock-app:hover+.dock-app>.app-icon{transform:translateY(-2px) scale(1.08)}
+  .dock-app:hover>span{opacity:1;color:#24242b;transform:translateX(-50%) translateY(0)}
+  .dock-area:has(.dock-app:hover) .dock-hint{opacity:0}
+  .dock-app:active>.app-icon{transform:translateY(-3px) scale(1.16);filter:brightness(.8) drop-shadow(0 3px 2px #17233066)}
+}
+@media(max-width:760px){.desktop-footer,.top-apps{display:none}}
+@media(max-width:600px){
+  :root{--menu-height:36px;--menu-font-size:12px;--dock-icon-size:53px}
+  .menu-bar{padding-left:8px;padding-right:12px}
+  .desktop-folder{top:16px;right:14px;width:80px}
+  .desktop-folder img{width:60px;height:60px}
+  .top-apps{display:none}
+  .system-menu summary{width:35px;position:relative}
+  .system-menu summary:before{content:"";position:absolute;inset:-4px 0}
+  .system-dropdown{width:224px}
+  .menu-bar .system-dropdown button,.menu-bar .system-dropdown a{min-height:44px;font-size:14px;padding:12px 19px}
+  .menu-status{gap:10px}.menu-bar .status-user{min-width:38px;padding:0 4px}
+  .dock-area{bottom:0;max-width:calc(100vw - 16px);width:410px}
+  .dock{padding:5px 7px calc(7px + env(safe-area-inset-bottom));gap:3px;justify-content:space-between;border-radius:5px 5px 0 0}
+  .dock-app{flex:1 1 0;width:auto;height:auto;min-height:44px;padding-bottom:7px;display:flex;flex-direction:column;align-items:center;min-width:0}
+  .dock-app>.app-icon{width:100%;max-width:var(--dock-icon-size);height:auto;aspect-ratio:1;flex-shrink:0}
+  .dock-app>span,.dock-app:focus-visible>span{display:none}
+  .dock-app:hover>.app-icon{transform:none;filter:drop-shadow(0 2px 1px #17233066)}
+  .dock-app:active>.app-icon{transform:scale(.94);filter:brightness(.8) drop-shadow(0 1px 1px #17233066)}
+  .dock-app>i{bottom:0}
+  .dock-divider{height:43px;margin:8px 5px 0;align-self:flex-start}
+  .dock-hint{font-size:12px;margin-bottom:15px}
+  .dock-app:focus-visible{outline-offset:0}
+}
+@media(max-width:360px){
+  :root{--dock-icon-size:49px}
+  .dock{padding-left:5px;padding-right:5px;gap:2px}
+  .dock-divider{margin-left:3px;margin-right:3px}
+  .dock-hint{font-size:11px}
+  .menu-status{gap:6px}
+}
+@media(max-height:460px) and (min-width:601px){
+  :root{--dock-icon-size:45px}
+  .dock{padding-top:4px;padding-bottom:3px}
+  .dock-divider{height:34px}
+  .dock-area{bottom:0}.dock-hint{display:none}
+}
+
+/* Shared Yosemite window chrome and typography for every app. */
+.app-window{
+  --window-body-size:13px;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:var(--window-body-size);
+  font-weight:400;
+  line-height:1.5;
+  color:#303030;
+  background:#ececec;
+  border:1px solid #00000036;
+  border-radius:6px;
+}
+.app-window .window-toolbar{
+  height:32px;
+  min-height:32px;
+  flex:0 0 32px;
+  padding:0 80px;
+  background:linear-gradient(#f0f0f0,#d8d8d8);
+  border-bottom:1px solid #b7b7b7;
+  box-shadow:inset 0 1px 0 #ffffffb3;
+}
+.app-window .window-toolbar h2{
+  font-size:13px;
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:0;
+  color:#454545;
+  text-shadow:0 1px 0 #ffffff80;
+}
+.app-window .traffic-lights{left:8px}
+.app-window .traffic{width:22px;height:30px}
+.app-window .traffic:focus-visible{outline:2px solid #367ed3;outline-offset:0;border-radius:3px}
+.app-window .window-content{padding:28px 32px;letter-spacing:0}
+.app-window .window-content h3{
+  font-size:24px;
+  font-weight:400;
+  line-height:1.25;
+  letter-spacing:-.015em;
+  color:#252525;
+  margin:7px 0 12px;
+}
+.app-window .eyebrow,.app-window .section-heading>span{
+  font-size:12px;
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:0;
+  color:#646464;
+}
+.app-window .intro-line,.app-window .about-copy,.app-window .view-heading p,
+.app-window .coming-soon>p,.app-window .guest-card p,.app-window .sample-message p{
+  font-size:var(--window-body-size);
+  font-weight:400;
+  line-height:1.6;
+  letter-spacing:0;
+  color:#363636;
+}
+.app-window .section-heading h4,.app-window .social-item strong,
+.app-window figcaption strong,.app-window .favorite h4,
+.app-window .guest-card h4,.app-window .message-byline strong{
+  font-size:var(--window-body-size);
+  font-weight:600;
+  line-height:1.4;
+  letter-spacing:0;
+  color:#303030;
+}
+.app-window .interest-tags span,.app-window .social-item small,
+.app-window .sample-label,.app-window .content-note,.app-window .favorite p,
+.app-window .favorite-note,.app-window .preview-chip,.app-window .message-byline span,
+.app-window .coming-soon .coming-footnote,.app-window figcaption span,
+.app-window .favorite-number{
+  font-size:12px;
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:0;
+  color:#626262;
+}
+.app-window .segmented-control button{font-size:var(--window-body-size);font-weight:400;color:#454545}
+.app-window .window-status{
+  min-height:26px;
+  font-size:11px;
+  line-height:1.4;
+  color:#626262;
+  background:#e8e8e8;
+  border-top:1px solid #d0d0d0;
+}
+@media(max-width:600px){
+  .app-window{--window-body-size:14px;border-radius:10px 10px 0 0}
+  .app-window .window-toolbar{height:44px;min-height:44px;flex-basis:44px;padding:0 66px}
+  .app-window .traffic{width:44px;height:44px}
+  .app-window .traffic.red:before{width:12px;height:12px}
+  .app-window .mobile-close{font-size:13px;font-weight:400;color:#2675c8;min-width:44px}
+  .app-window .window-content{padding:22px 20px}
+  .app-window .window-content h3{font-size:22px}
+  .app-window .window-status{padding:7px 14px calc(7px + env(safe-area-inset-bottom))}
+}
+
+/* Finder: a persistent source list beside an independently scrolling pane. */
+.app-window.is-finder:not(.maximized){width:min(860px,calc(100vw - 60px));height:min(620px,calc(100dvh - 100px))}
+.app-window.is-finder .window-content{display:flex;flex:1;padding:0;overflow:hidden}
+.app-window.is-folder .finder-sidebar,.app-window.is-folder .finder-path{display:none}
+.finder-layout{display:flex;flex:1;min-width:0;min-height:0}
+.finder-sidebar{flex:0 0 168px;padding:8px 0;background:#efefef;border-right:1px solid #bdbdbd;overflow:auto}
+.finder-sidebar-heading{padding:0 10px 5px;font-size:11px;font-weight:600;color:#818181}
+.finder-sidebar button{display:flex;align-items:center;gap:7px;width:100%;min-height:27px;padding:4px 16px;background:transparent;color:#343434;font-size:13px;line-height:1.4;text-align:left}
+.finder-sidebar button:hover{background:#dedede}
+.finder-sidebar button[aria-current="page"]{background:#c9c9c9}
+.finder-sidebar button:focus-visible{outline:2px solid #3478c5;outline-offset:-2px}
+.finder-sidebar svg{width:17px;height:17px;flex-shrink:0;fill:#d1d1d1;stroke:#777;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.finder-sidebar [data-finder-page="applications"] svg{fill:none;stroke-width:1.8}
+.finder-main{display:flex;flex:1;flex-direction:column;min-width:0;min-height:0;background:#fff}
+.finder-pane{flex:1;min-height:0;min-width:0;padding:26px 28px;overflow:auto;overscroll-behavior:contain}
+.finder-pane:focus-visible{outline:2px solid #3478c5;outline-offset:-2px}
+.finder-path{display:flex;align-items:center;gap:7px;flex-shrink:0;min-height:23px;padding:3px 12px;border-top:1px solid #d0d0d0;background:#fafafa;font-size:11px;line-height:1.4;color:#414141}
+.finder-path svg{width:14px;height:14px;fill:#9dd9f3;stroke:#69b2d1;stroke-width:1}
+.finder-path-separator{color:#929292}
+.app-window.is-finder .window-status{justify-content:center;background:linear-gradient(#eaeaea,#dcdcdc);border-top-color:#b8b8b8}
+.app-window.is-finder .window-status>span:last-child{display:none}
+.finder-app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:20px 12px;align-content:start}
+.finder-app-grid button{display:flex;align-items:center;flex-direction:column;gap:6px;min-width:0;padding:6px 2px;background:none;border-radius:4px;color:#222;font-size:13px;line-height:1.4}
+.finder-app-grid img{display:block;width:64px;height:64px;object-fit:contain;padding:4px;border-radius:4px}
+.finder-app-grid img[src$="blank-text-file.svg"]{width:min(72px,100%);height:auto;aspect-ratio:1;padding:0}
+.finder-app-grid button span{padding:1px 5px;border-radius:3px}
+.finder-app-grid button:hover img{background:#e9e9e9}
+.finder-app-grid button:focus-visible{outline:2px solid #3478c5;outline-offset:2px}
+.finder-app-grid button:focus-visible span,.finder-app-grid button:active span{background:#2869dd;color:white}
+.app-window.is-textedit:not(.maximized){width:min(650px,calc(100vw - 60px));height:min(470px,calc(100dvh - 100px))}
+.app-window.is-textedit .window-content{flex:1;background:#fff;padding:30px 38px}
+.textedit-document pre{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.8;color:#303030;white-space:pre-wrap;overflow-wrap:anywhere}
+.app-window.is-finder .about-intro{gap:18px}
+.app-window.is-finder .avatar>.app-icon{width:76px;height:76px}
+.social-links{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.social-links a{display:inline-flex;align-items:center;min-height:28px;color:#1674d6;font-size:var(--window-body-size);font-weight:400;line-height:1.5;text-decoration:none}
+.social-links a:hover{text-decoration:underline}
+.social-links a:focus-visible{outline:2px solid #3478c5;outline-offset:2px;border-radius:2px;text-decoration:underline}
+.app-window.is-finder .social-item{gap:9px;padding:11px;border-color:#e5e5e5;border-radius:5px}
+.app-window.is-finder .sample-label{display:none}
+.app-window.is-finder .desktop-break{display:none}
+@media(max-width:600px){
+  .app-window.is-finder:not(.maximized){width:calc(100vw - 16px);height:min(700px,calc(100dvh - 65px - env(safe-area-inset-top)))}
+  .finder-sidebar{flex-basis:110px;padding-top:10px}
+  .finder-sidebar-heading{padding-left:9px}
+  .finder-sidebar button{min-height:44px;gap:5px;padding:7px;font-size:12px}
+  .finder-sidebar svg{width:15px;height:15px}
+  .finder-pane{padding:20px 14px}
+  .app-window.is-finder .about-intro{flex-direction:column;align-items:flex-start;gap:13px}
+  .app-window.is-finder .avatar>.app-icon{width:60px;height:60px}
+  .app-window.is-finder .social-grid{grid-template-columns:1fr}
+  .app-window.is-finder .social-item{padding:10px 7px;gap:7px}
+  .app-window.is-finder .social-symbol{width:25px;height:25px;font-size:22px}
+  .app-window.is-finder .social-item>span:nth-child(2){min-width:0}
+  .app-window.is-finder .section-heading{margin-top:24px}
+  .social-links{gap:0}
+  .social-links a{min-height:44px}
+  .finder-app-grid{grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:18px 8px}
+  .finder-app-grid img{width:60px;height:60px}
+  .app-window.is-textedit:not(.maximized){width:calc(100vw - 16px);height:min(520px,calc(100dvh - 65px - env(safe-area-inset-top)))}
+  .app-window.is-textedit .window-content{padding:25px 23px}
+  .finder-path{padding:4px 8px;gap:5px;font-size:11px}
+}

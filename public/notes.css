@@ -1,0 +1,80 @@
+/* Yosemite Notes: yellow selection, a quiet source list, and warm paper. */
+.app-window.is-notes:not(.maximized){width:min(860px,calc(100vw - 60px));height:min(670px,calc(100dvh - 100px))}
+.app-window.is-notes .window-content{padding:0;display:flex;flex:1;overflow:hidden}
+.app-window.is-notes .window-status>span:last-child{display:none}
+.app-window.is-notes .window-status{background:#f5f4ef;color:#777369}
+.notes-app{display:flex;flex:1;min-width:0;min-height:0;background:#fff}
+.notes-sidebar{display:flex;flex-direction:column;flex:0 0 196px;min-width:0;min-height:0;border-right:1px solid #d9d7d0;background:#fff}
+.notes-sidebar-toolbar{height:44px;flex-shrink:0;padding:7px 10px;border-bottom:1px solid #ecebe7;background:#fafaf8}
+.notes-button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:28px;padding:3px 8px;border:1px solid #c8c7c3;border-radius:4px;background:linear-gradient(#fff,#f3f3f1);box-shadow:0 1px 1px #00000008;color:#55534d;font-size:12px;line-height:1.3;white-space:nowrap}
+.notes-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}
+.notes-button:hover{background:#ecebe7}
+.notes-button[aria-pressed=true]{background:#eee6c1;border-color:#bfb389;color:#514521}
+.notes-button:disabled{opacity:.35;cursor:default}
+.notes-post{background:linear-gradient(#ffed8d,#f7da58);border-color:#d4bd59;color:#5e4b15}
+.notes-message{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 16px;background:#fff4c9;color:#66551b;font-size:12px;line-height:1.5;flex-shrink:0}
+.notes-load-more{display:block;width:100%;min-height:44px;background:#faf9f5;color:#8b6b16;font-size:13px}
+.notes-app button:focus-visible{outline:2px solid #b08a24;outline-offset:-2px}
+.notes-list{flex:1;overflow:auto;min-height:0}
+.note-list-item{display:block;position:relative;width:100%;padding:12px 14px;background:#fff;text-align:left;color:#36332e;line-height:1.4}
+.note-list-item:after{content:"";position:absolute;bottom:0;left:14px;right:14px;height:1px;background:#e9e7e1}
+.note-list-item:hover{background:#f7f5eb}
+.note-list-item[aria-current=true]{background:#ffe768}
+.note-list-item[aria-current=true]:after{display:none}
+.note-list-item strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:600}
+.note-list-item.is-pinned strong{display:flex;align-items:center;gap:6px}
+.note-pin{width:14px;height:14px;flex-shrink:0;fill:none;stroke:#947520;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transform:rotate(30deg)}
+.note-list-item small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#827b66;margin-top:3px}
+.note-list-item .note-snippet{font-size:12px;color:#76716a}
+.notes-editor{display:flex;flex-direction:column;min-width:0;min-height:0;flex:1;background:#fdfcf8}
+.notes-editor-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:44px;flex-shrink:0;padding:7px 16px;background:#fdfcf8}
+.note-date{font:inherit;color:inherit;white-space:nowrap}
+.notes-back,.notes-mobile-new{display:none}
+.notes-paper{overflow:auto;overscroll-behavior:contain;flex:1;min-height:0;padding:17px 30px 30px;background:linear-gradient(100deg,#fffdfb40,#fff0),#fdfcf8}
+.note-title,.note-body{display:block;width:100%;padding:0;border:0;border-radius:0;background:transparent;color:#35332e;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;box-shadow:none;resize:none}
+.note-title{font-size:22px;font-weight:500;line-height:1.4;margin:0 0 16px}
+.note-title:has(+ .note-signature:not([hidden])){margin-bottom:6px}
+.note-body{font-size:14px;font-weight:400;line-height:1.65;min-height:112px;overflow:hidden}
+.note-title:focus,.note-body:focus{outline:none}
+.note-title:focus-visible,.note-body:focus-visible{box-shadow:0 1px 0 #b69b4f70}
+.note-title::placeholder,.note-body::placeholder{color:#a7a29a;opacity:1}
+.notes-sketch{margin-top:14px}
+.app-window .note-signature{margin:0 0 18px;color:#6e685c;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.drawing-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;padding:7px 0;border-top:1px solid #e7e3d8;border-bottom:1px solid #e7e3d8}
+.drawing-tools,.drawing-colors,.drawing-history{display:flex;gap:4px;align-items:center}
+.drawing-history{margin-left:auto}
+.drawing-history .notes-button{font-size:20px;width:30px;padding:0}
+.drawing-colors button{display:grid;place-items:center;width:28px;height:28px;padding:0;border:1px solid transparent;border-radius:50%;background:none}
+.drawing-colors button:before{content:"";width:16px;height:16px;border-radius:50%;background:var(--ink);box-shadow:inset 0 0 0 1px #0002}
+.drawing-colors button[aria-pressed=true]{border-color:#a8a299}
+.note-canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;touch-action:pan-y}
+.notes-sketch.is-drawing .note-canvas{touch-action:none;cursor:crosshair;background:#fff8;outline:1px solid #ddd8c9;border-radius:3px}
+.notes-sketch.is-erasing .note-canvas{cursor:cell}
+.app-window .drawing-hint{font-size:12px;line-height:1.4;color:#8a8375;margin:10px 0 0}
+@media(max-width:600px){
+  .app-window.is-notes:not(.maximized){width:calc(100vw - 16px);height:min(760px,calc(100dvh - 65px - env(safe-area-inset-top)))}
+  .notes-sidebar{flex:1;border-right:0}
+  .notes-editor{display:none}
+  .notes-app.is-editor .notes-sidebar{display:none}
+  .notes-app.is-editor .notes-editor{display:flex}
+  .notes-sidebar-toolbar{height:56px;padding:6px 12px}
+  .notes-button{min-height:36px;font-size:13px}
+  .notes-sidebar-toolbar .notes-button{min-height:44px}
+  .note-list-item{padding:15px 18px;min-height:76px}
+  .note-list-item strong{font-size:15px}
+  .note-list-item small{font-size:12px}
+  .note-list-item .note-snippet{font-size:13px}
+  .notes-editor-toolbar{min-height:50px;padding:3px 12px;gap:8px}
+  .notes-editor-toolbar .notes-button{min-height:44px;min-width:44px}
+  .notes-back,.notes-mobile-new{display:inline-flex}
+  .notes-back{margin-right:auto;border:0;box-shadow:none;background:none;color:#8b6b16;padding-left:0}
+  .notes-back span{font-size:25px;line-height:1}
+  .notes-paper{padding:16px 20px 24px}
+  .note-title{font-size:23px}
+  .note-body{font-size:16px;min-height:120px;line-height:1.65}
+  .app-window .note-signature{font-size:14px}
+  .drawing-controls{gap:8px 6px}
+  .drawing-colors button{width:32px;height:36px}
+  .drawing-history .notes-button{width:36px;min-height:36px}
+  .drawing-history{margin-left:0}
+}

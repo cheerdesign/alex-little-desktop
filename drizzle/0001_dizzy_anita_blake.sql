@@ -1,0 +1,1 @@
+ALTER TABLE `guest_notes` ADD `deleted_at` integer;
