@@ -6,6 +6,16 @@ A mobile-friendly, Yosemite-inspired personal homepage with a shared Notes guest
 
 Run `npm install`, `npm run db:local`, then `npm run dev`. Visit http://127.0.0.1:4173. Local preview data is separate from hosted visitor notes.
 
+## Railway deployment
+
+The repository also includes a Node 24 server and Dockerfile for Railway. This serves the same `public/` assets and reuses the Notes API with a persistent SQLite database. To deploy it:
+
+1. Create a Railway project from this GitHub repository. Railway will use the `Dockerfile`.
+2. Attach a persistent volume to the web service. Its mount path can be `/data`; the service reads `RAILWAY_VOLUME_MOUNT_PATH` automatically. It intentionally fails to start on Railway without a volume, so guestbook posts cannot be lost on redeploy.
+3. Generate a public domain for the service. The server listens on Railway's `PORT` and applies any pending `drizzle/` migrations when it starts.
+
+Run `npm start` locally to test the Railway server at http://127.0.0.1:3000; its local SQLite file is stored in `data/`. The Railway database starts empty. Existing notes on the Sites deployment are not part of this repository and must be migrated separately if they should appear on the new domain. Anonymous author cookies belong to the old domain, so imported notes will be read-only to visitors on the new domain unless ownership is migrated deliberately. Keep the existing Sites deployment available until the new domain and data have been verified.
+
 ## Edit
 
 - `public/index.html`: desktop and app-window templates.

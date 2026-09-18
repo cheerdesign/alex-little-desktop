@@ -1,0 +1,10 @@
+.git
+.openai
+node_modules
+dist
+.wrangler
+.sites-runtime
+data
+samplephotos
+macxicons
+*.zip
