@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="movies.css">
   <link rel="stylesheet" href="games.css">
   <link rel="stylesheet" href="wallpapers.css?v=20260927-4">
+  <link rel="stylesheet" href="pet.css?v=20260927-1">
   <link rel="stylesheet" href="windows.css">
   <script src="notes.js" defer></script>
   <script src="photos-data.js" defer></script>
@@ -28,6 +29,7 @@
   <script src="movies.js" defer></script>
   <script src="games.js" defer></script>
   <script src="wallpapers.js?v=20260927-4" defer></script>
+  <script src="pet.js?v=20260927-1" defer></script>
   <script src="app.js?v=20260927-2" defer></script>
 </head>
 <body>
@@ -78,6 +80,10 @@
     <button class="desktop-folder" data-open="alex" data-finder-initial="welcome" aria-label="Welcome!" aria-haspopup="dialog">
       <img src="assets/icons/Folder.png" alt="" width="256" height="256" draggable="false">
       <span>Welcome!</span>
+    </button>
+    <button class="desktop-pet" type="button" aria-label="Pixel puppy. Move the pointer and I will follow. You can also drag me.">
+      <span class="desktop-pet-alert" aria-hidden="true">!</span>
+      <canvas class="desktop-pet-canvas" width="32" height="32" aria-hidden="true"></canvas>
     </button>
     <div class="dock-area">
       <nav class="dock" aria-label="Desktop apps">
