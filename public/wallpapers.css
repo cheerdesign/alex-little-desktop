@@ -40,20 +40,20 @@
     linear-gradient(155deg,#f3bd8b,#df7793 48%,#775f9f 78%,#334b7c);
   animation:wallpaper-drift 12s ease-in-out infinite alternate;
 }
-.wallpaper[data-wallpaper="glass"]{background:#d8d5d2}
-.wallpaper[data-wallpaper="glass"] .wallpaper-scene{
+.wallpaper[data-wallpaper="galaxy"]{background:#020514}
+.wallpaper[data-wallpaper="galaxy"] .wallpaper-scene{
   background:
-    repeating-linear-gradient(90deg,#ffffff26 0 2px,#756e6814 2px 4px,transparent 4px 15px),
-    repeating-linear-gradient(0deg,#ffffff4d 0 2px,#817a7414 2px 4px,transparent 4px 15px),
-    radial-gradient(circle at 18% 18%,#fff 0,transparent 28%),
-    radial-gradient(circle at 82% 68%,#d4c4bb 0,transparent 36%),
-    linear-gradient(135deg,#f2f2f0,#d7d4d1 54%,#ece8e4);
-  filter:saturate(.72) contrast(.94);
+    radial-gradient(ellipse at 18% 20%,#214b9f70 0,transparent 34%),
+    radial-gradient(ellipse at 78% 32%,#5c2eaa73 0,transparent 41%),
+    radial-gradient(ellipse at 52% 82%,#132f696b 0,transparent 38%),
+    linear-gradient(145deg,#01030e,#071229 48%,#11092c 76%,#020410);
+  animation:galaxy-breathe 18s ease-in-out infinite alternate;
 }
-.wallpaper[data-wallpaper="glass"] .wallpaper-vignette{background:linear-gradient(135deg,#fff6 0,transparent 38%,#786e6726 100%)}
+.wallpaper[data-wallpaper="galaxy"] .wallpaper-vignette{background:radial-gradient(ellipse at center,transparent 35%,#01020d80 100%)}
 .wallpaper.motion-off .wallpaper-scene{animation:none!important;transition:none;transform:scale(1.035)}
 @keyframes wallpaper-breathe{from{filter:hue-rotate(-8deg) saturate(.94)}to{filter:hue-rotate(12deg) saturate(1.14)}}
 @keyframes wallpaper-drift{from{filter:hue-rotate(-5deg) brightness(.98)}to{filter:hue-rotate(8deg) brightness(1.07)}}
+@keyframes galaxy-breathe{from{filter:hue-rotate(-5deg) brightness(.92)}to{filter:hue-rotate(6deg) brightness(1.06)}}
 
 .app-window.is-wallpapers{width:min(780px,calc(100vw - 60px));height:min(590px,calc(100dvh - 110px))}
 .app-window.is-wallpapers .window-content{padding:0;background:#f3f3f3;overflow:auto}
@@ -90,19 +90,15 @@
 .wallpaper-preview-sunset:before{width:76px;height:76px;border-radius:50%;left:48%;top:30%;background:#ffcfa53d;box-shadow:54px 24px 0 #6f73c340,-64px 29px 0 #ffd6a52d;animation:preview-float 4.5s ease-in-out infinite alternate}
 .wallpaper-choice-feature{grid-column:1/-1}
 .wallpaper-choice-feature .wallpaper-preview{aspect-ratio:16/4.3}
-.wallpaper-preview-glass{
-  background:
-    repeating-linear-gradient(90deg,#fff7 0 2px,#7772 2px 4px,transparent 4px 14px),
-    repeating-linear-gradient(0deg,#fff8 0 2px,#7772 2px 4px,transparent 4px 14px),
-    linear-gradient(135deg,#f5f5f3,#cbc8c5 52%,#eee9e5);
-}
-.wallpaper-preview-glass:before{left:50%;top:52%;width:238px;height:126px;border-radius:45%;background:radial-gradient(ellipse at 27% 65%,#f9fafb 0 19%,#b9c0c5 25%,transparent 28%),radial-gradient(ellipse at 38% 42%,#fff 0 23%,#bdc4c9 29%,transparent 32%),radial-gradient(ellipse at 53% 30%,#fff 0 26%,#b5bdc3 32%,transparent 35%),radial-gradient(ellipse at 69% 46%,#f8fafb 0 24%,#aeb8c0 31%,transparent 34%),radial-gradient(ellipse at 77% 67%,#eef1f3 0 19%,#9faab2 26%,transparent 29%),radial-gradient(ellipse at 51% 70%,#edf1f3 0 38%,#98a5ae 48%,transparent 51%);filter:drop-shadow(0 14px 8px #615b5740);transform:translate(-50%,-50%);animation:preview-press 3.8s ease-in-out infinite alternate}
-.wallpaper-preview-glass:after{inset:0;background:repeating-linear-gradient(90deg,transparent 0 10px,#fff8 10px 12px,#776f681f 12px 14px),repeating-linear-gradient(0deg,transparent 0 10px,#fff8 10px 12px,#776f681f 12px 14px);mix-blend-mode:multiply;opacity:.5}
+.wallpaper-preview-galaxy{background:radial-gradient(ellipse at 50% 55%,#7149c466 0,transparent 36%),linear-gradient(145deg,#01030e,#07152d 55%,#160b34)}
+.wallpaper-preview-galaxy:before{inset:-22% -10%;background:linear-gradient(168deg,transparent 30%,#566ef228 39%,#b76cf94a 48%,#d8e7ff61 51%,#7758e247 56%,transparent 68%);filter:blur(8px);animation:preview-galaxy 9s ease-in-out infinite alternate}
+.wallpaper-preview-galaxy:after{inset:0;background-image:radial-gradient(#fff 0 1px,transparent 1.5px),radial-gradient(#a8c9ff 0 1px,transparent 1.5px),radial-gradient(#e7c6ff 0 .8px,transparent 1.4px);background-position:0 0,24px 14px,8px 28px;background-size:42px 37px,59px 53px,31px 47px;opacity:.72;animation:preview-galaxy-stars 14s linear infinite}
 .wallpaper-tip{display:flex;align-items:center;justify-content:center;gap:7px;margin:22px 0 0;color:#858585;font-size:12px}.wallpaper-tip span{color:#647fc1}
 @keyframes preview-sparkle{from{opacity:.4;transform:translateY(0)}to{opacity:1;transform:translateY(-3px)}}
 @keyframes preview-aurora{from{transform:translate3d(-3%,1%,0) rotate(-3deg)}to{transform:translate3d(5%,-2%,0) rotate(4deg)}}
 @keyframes preview-float{from{transform:translate(-6px,4px) scale(.94)}to{transform:translate(8px,-5px) scale(1.08)}}
-@keyframes preview-press{from{transform:translate(-55%,-48%) scale(.92);opacity:.76}to{transform:translate(-45%,-52%) scale(1.04);opacity:1}}
+@keyframes preview-galaxy{from{transform:translate3d(-4%,2%,0) scale(.96);filter:blur(8px) hue-rotate(-5deg)}to{transform:translate3d(5%,-2%,0) scale(1.05);filter:blur(10px) hue-rotate(8deg)}}
+@keyframes preview-galaxy-stars{from{transform:translateX(0)}to{transform:translateX(42px)}}
 
 @media(max-width:600px){
   .app-window.is-wallpapers{width:calc(100vw - 16px);height:calc(100dvh - var(--workspace-top) - var(--workspace-bottom))}
