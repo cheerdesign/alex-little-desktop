@@ -8,7 +8,7 @@ const appInfo = {
   music: { title: 'My Favorite Music', status: '3 Songs' },
   youtube: { title: 'My Favorite Movie', status: '6 Movies' },
   play: { title: 'Game Center', status: 'Memory Match · 1 of 3' },
-  wallpapers: { title: 'Dynamic Wallpapers', status: '4 interactive wallpapers' },
+  wallpapers: { title: 'Dynamic Wallpapers', status: '5 interactive wallpapers' },
   guestbook: { title: 'Notes', status: 'Shared guestbook' },
   textedit: { title: 'Welcome.txt', status: 'Plain text document' }
 };

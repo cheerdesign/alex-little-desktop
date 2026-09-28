@@ -8,7 +8,8 @@
     yosemite: { title: 'Yosemite Breeze' },
     aurora: { title: 'Aurora Drift' },
     cosmos: { title: 'Quiet Cosmos' },
-    sunset: { title: 'Liquid Sunset' }
+    sunset: { title: 'Liquid Sunset' },
+    glass: { title: 'Reeded Glass' }
   };
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const safeStorage = {
@@ -138,6 +139,72 @@
     }
   }
 
+  function drawGlass(time) {
+    const centerX = pointer.smoothX;
+    const centerY = pointer.smoothY;
+    const pulse = 1 + Math.sin(time * .0017) * .025;
+    const strength = (.66 + pointer.energy * .34) * pulse;
+    const lobes = [
+      { x: centerX, y: centerY + 32, radius: 104 },
+      { x: centerX - 73, y: centerY - 49, radius: 43 },
+      { x: centerX - 30, y: centerY - 82, radius: 45 },
+      { x: centerX + 17, y: centerY - 88, radius: 44 },
+      { x: centerX + 59, y: centerY - 65, radius: 41 },
+      { x: centerX + 88, y: centerY + 2, radius: 46 }
+    ];
+
+    context.save();
+    context.filter = 'blur(16px)';
+    context.fillStyle = `rgba(103,91,83,${.12 * strength})`;
+    for (const lobe of lobes) {
+      context.beginPath();
+      context.arc(lobe.x, lobe.y, lobe.radius * .86, 0, Math.PI * 2);
+      context.fill();
+    }
+    context.filter = 'none';
+
+    const highlight = context.createRadialGradient(centerX - 18, centerY - 28, 10, centerX, centerY, 190);
+    highlight.addColorStop(0, `rgba(255,255,255,${.34 * strength})`);
+    highlight.addColorStop(.48, `rgba(255,250,246,${.13 * strength})`);
+    highlight.addColorStop(.72, `rgba(119,108,100,${.08 * strength})`);
+    highlight.addColorStop(1, 'rgba(255,255,255,0)');
+    context.fillStyle = highlight;
+    context.fillRect(centerX - 220, centerY - 220, 440, 440);
+
+    const cell = 15;
+    const reach = 175;
+    const startX = Math.floor((centerX - reach) / cell) * cell;
+    const endX = Math.ceil((centerX + reach) / cell) * cell;
+    const startY = Math.floor((centerY - reach) / cell) * cell;
+    const endY = Math.ceil((centerY + reach) / cell) * cell;
+    for (let y = startY; y <= endY; y += cell) {
+      for (let x = startX; x <= endX; x += cell) {
+        const sampleX = x + cell / 2;
+        const sampleY = y + cell / 2;
+        let influence = 0;
+        for (const lobe of lobes) {
+          const distance = Math.hypot(sampleX - lobe.x, sampleY - lobe.y);
+          influence = Math.max(influence, Math.max(0, 1 - distance / lobe.radius));
+        }
+        if (influence <= 0) continue;
+        const dx = sampleX - centerX;
+        const dy = sampleY - centerY;
+        const distance = Math.max(1, Math.hypot(dx, dy));
+        const bend = Math.pow(influence, 1.55) * 16 * strength;
+        const shimmer = Math.sin(distance * .12 - time * .0022) * influence * 2.1;
+        const offsetX = dx / distance * (bend + shimmer);
+        const offsetY = dy / distance * (bend + shimmer);
+        const alpha = .08 + influence * .2;
+        context.fillStyle = `rgba(255,255,255,${alpha})`;
+        context.strokeStyle = `rgba(93,84,79,${.08 + influence * .12})`;
+        context.lineWidth = .7;
+        context.fillRect(x + offsetX + 1, y + offsetY + 1, cell - 2, cell - 2);
+        context.strokeRect(x + offsetX + 1.5, y + offsetY + 1.5, cell - 3, cell - 3);
+      }
+    }
+    context.restore();
+  }
+
   function drawRipples(now) {
     for (let index = ripples.length - 1; index >= 0; index--) {
       const ripple = ripples[index];
@@ -145,7 +212,9 @@
       if (age >= 1) { ripples.splice(index, 1); continue; }
       context.beginPath();
       context.arc(ripple.x, ripple.y, 18 + age * 92, 0, Math.PI * 2);
-      context.strokeStyle = `rgba(255,255,255,${(1 - age) * .42})`;
+      context.strokeStyle = theme === 'glass'
+        ? `rgba(92,82,76,${(1 - age) * .32})`
+        : `rgba(255,255,255,${(1 - age) * .42})`;
       context.lineWidth = 1.5 + (1 - age) * 1.5;
       context.stroke();
     }
@@ -171,6 +240,7 @@
     if (theme === 'aurora') drawAurora(now);
     if (theme === 'cosmos') drawCosmos(now);
     if (theme === 'sunset') drawSunset(now);
+    if (theme === 'glass') drawGlass(now);
     drawRipples(now);
     if (motion && !document.hidden) animationFrame = requestAnimationFrame(render);
   }

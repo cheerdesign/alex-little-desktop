@@ -40,6 +40,17 @@
     linear-gradient(155deg,#f3bd8b,#df7793 48%,#775f9f 78%,#334b7c);
   animation:wallpaper-drift 12s ease-in-out infinite alternate;
 }
+.wallpaper[data-wallpaper="glass"]{background:#d8d5d2}
+.wallpaper[data-wallpaper="glass"] .wallpaper-scene{
+  background:
+    repeating-linear-gradient(90deg,#ffffff26 0 2px,#756e6814 2px 4px,transparent 4px 15px),
+    repeating-linear-gradient(0deg,#ffffff4d 0 2px,#817a7414 2px 4px,transparent 4px 15px),
+    radial-gradient(circle at 18% 18%,#fff 0,transparent 28%),
+    radial-gradient(circle at 82% 68%,#d4c4bb 0,transparent 36%),
+    linear-gradient(135deg,#f2f2f0,#d7d4d1 54%,#ece8e4);
+  filter:saturate(.72) contrast(.94);
+}
+.wallpaper[data-wallpaper="glass"] .wallpaper-vignette{background:linear-gradient(135deg,#fff6 0,transparent 38%,#786e6726 100%)}
 .wallpaper.motion-off .wallpaper-scene{animation:none!important;transition:none;transform:scale(1.035)}
 @keyframes wallpaper-breathe{from{filter:hue-rotate(-8deg) saturate(.94)}to{filter:hue-rotate(12deg) saturate(1.14)}}
 @keyframes wallpaper-drift{from{filter:hue-rotate(-5deg) brightness(.98)}to{filter:hue-rotate(8deg) brightness(1.07)}}
@@ -77,15 +88,26 @@
 .wallpaper-preview-cosmos:after{inset:0;background-image:radial-gradient(#fff 0 1px,transparent 1.6px),radial-gradient(#bcd7ff 0 1px,transparent 1.6px);background-position:0 0,22px 18px;background-size:39px 39px,53px 53px;animation:preview-sparkle 2s ease-in-out infinite alternate}
 .wallpaper-preview-sunset{background:radial-gradient(circle at 28% 28%,#ffe6a5 0 8%,transparent 27%),radial-gradient(circle at 78% 18%,#e375a0 0 14%,transparent 39%),linear-gradient(145deg,#efb47f,#d96f91 52%,#40578a)}
 .wallpaper-preview-sunset:before{width:76px;height:76px;border-radius:50%;left:48%;top:30%;background:#ffcfa53d;box-shadow:54px 24px 0 #6f73c340,-64px 29px 0 #ffd6a52d;animation:preview-float 4.5s ease-in-out infinite alternate}
+.wallpaper-choice-feature{grid-column:1/-1}
+.wallpaper-choice-feature .wallpaper-preview{aspect-ratio:16/4.3}
+.wallpaper-preview-glass{
+  background:
+    repeating-linear-gradient(90deg,#fff7 0 2px,#7772 2px 4px,transparent 4px 14px),
+    repeating-linear-gradient(0deg,#fff8 0 2px,#7772 2px 4px,transparent 4px 14px),
+    linear-gradient(135deg,#f5f5f3,#cbc8c5 52%,#eee9e5);
+}
+.wallpaper-preview-glass:before{left:50%;top:52%;width:148px;height:116px;border-radius:48% 46% 42% 44%;background:radial-gradient(circle at 42% 38%,#fff9 0 12%,#ad9f9652 46%,transparent 72%);filter:blur(6px);transform:translate(-50%,-50%);animation:preview-press 3.8s ease-in-out infinite alternate}
+.wallpaper-preview-glass:after{inset:0;background:repeating-linear-gradient(90deg,transparent 0 10px,#fff8 10px 12px,#776f681f 12px 14px),repeating-linear-gradient(0deg,transparent 0 10px,#fff8 10px 12px,#776f681f 12px 14px);mix-blend-mode:multiply;opacity:.5}
 .wallpaper-tip{display:flex;align-items:center;justify-content:center;gap:7px;margin:22px 0 0;color:#858585;font-size:12px}.wallpaper-tip span{color:#647fc1}
 @keyframes preview-sparkle{from{opacity:.4;transform:translateY(0)}to{opacity:1;transform:translateY(-3px)}}
 @keyframes preview-aurora{from{transform:translate3d(-3%,1%,0) rotate(-3deg)}to{transform:translate3d(5%,-2%,0) rotate(4deg)}}
 @keyframes preview-float{from{transform:translate(-6px,4px) scale(.94)}to{transform:translate(8px,-5px) scale(1.08)}}
+@keyframes preview-press{from{transform:translate(-58%,-48%) scale(.9);opacity:.62}to{transform:translate(-42%,-52%) scale(1.12);opacity:1}}
 
 @media(max-width:600px){
   .app-window.is-wallpapers{width:calc(100vw - 16px);height:calc(100dvh - var(--workspace-top) - var(--workspace-bottom))}
   .wallpapers-app{padding:22px 16px 20px}.wallpapers-intro{align-items:flex-start;margin-bottom:18px}.wallpapers-intro h3{font-size:18px!important}.wallpapers-intro p{font-size:12px;max-width:230px}.wallpaper-motion-toggle>span{display:none}
   .wallpaper-grid{gap:12px}.wallpaper-choice{padding:6px 6px 10px}.wallpaper-choice strong{font-size:12px}.wallpaper-choice small{font-size:10px}.wallpaper-tip{font-size:11px;margin-top:18px;text-align:center}
 }
-@media(max-width:370px){.wallpaper-grid{grid-template-columns:1fr}.wallpaper-preview{aspect-ratio:16/6}.wallpapers-intro p{max-width:220px}}
+@media(max-width:370px){.wallpaper-grid{grid-template-columns:1fr}.wallpaper-choice-feature{grid-column:auto}.wallpaper-preview,.wallpaper-choice-feature .wallpaper-preview{aspect-ratio:16/6}.wallpapers-intro p{max-width:220px}}
 @media(prefers-reduced-motion:reduce){.wallpaper-scene,.wallpaper-preview:before,.wallpaper-preview:after,.wallpaper-preview i{animation:none!important;transition:none!important}}
