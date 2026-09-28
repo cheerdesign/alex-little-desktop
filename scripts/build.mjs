@@ -18,7 +18,10 @@ for (const filename of await readdir('public')) {
   if (filename.endsWith('.html')) {
     const html = await readFile('public/' + filename, 'utf8');
     for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
-      if (!/^(https?:|data:)/.test(match[1])) await readFile('public/' + match[1]);
+      if (!/^(https?:|data:)/.test(match[1])) {
+        const assetPath = match[1].split('?')[0];
+        await readFile('public/' + assetPath);
+      }
     }
   }
 }
