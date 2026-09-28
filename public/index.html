@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="music.css">
   <link rel="stylesheet" href="movies.css">
   <link rel="stylesheet" href="games.css">
+  <link rel="stylesheet" href="wallpapers.css">
   <link rel="stylesheet" href="windows.css">
   <script src="notes.js" defer></script>
   <script src="photos-data.js" defer></script>
@@ -26,10 +27,11 @@
   <script src="movies-data.js" defer></script>
   <script src="movies.js" defer></script>
   <script src="games.js" defer></script>
+  <script src="wallpapers.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
-  <div class="wallpaper" aria-hidden="true"></div>
+  <div class="wallpaper" data-wallpaper="yosemite" aria-hidden="true"><div class="wallpaper-scene"></div><canvas class="wallpaper-canvas"></canvas><div class="wallpaper-vignette"></div></div>
   <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <symbol id="apple-mark" viewBox="0 0 24 24"><path d="M16.2 2.3c.1 1.7-.6 3-1.5 3.9-1 .9-2.4 1.6-3.9 1.5-.1-1.6.7-3 1.6-3.8 1-1 2.5-1.7 3.8-1.6Zm3.5 15.3c-.5 1.2-.8 1.7-1.4 2.7-.9 1.3-2.1 3-3.6 3-1.3 0-1.6-.9-3.4-.9-1.7 0-2.1.9-3.4.9-1.5 0-2.7-1.5-3.6-2.8-2.5-3.5-3-8-.8-10.4 1.4-1.7 3.6-2.6 5.7-2 1 .3 1.8.8 2.6.8.7 0 1.8-.7 3-1 1.9-.3 3.7.4 4.9 1.8-4.3 2.4-3.7 7 .0 8Z"/></symbol>
@@ -54,12 +56,13 @@
         <button data-open="youtube">YouTube</button>
         <hr>
         <button data-open="play">Games</button>
+        <button data-open="wallpapers">Wallpapers</button>
         <button data-open="guestbook">Notes & drawings</button>
         <hr>
         <button id="show-desktop">Show desktop</button>
       </div>
     </details>
-    <nav class="top-apps" aria-label="Main navigation"><button data-open="photos">Photos</button><button data-open="collection">Books</button><button data-open="music">Music</button><button data-open="youtube">YouTube</button><button data-open="play">Games</button><button data-open="guestbook">Notes</button></nav>
+    <nav class="top-apps" aria-label="Main navigation"><button data-open="photos">Photos</button><button data-open="collection">Books</button><button data-open="music">Music</button><button data-open="youtube">YouTube</button><button data-open="play">Games</button><button data-open="wallpapers">Wallpapers</button><button data-open="guestbook">Notes</button></nav>
     <div class="menu-status">
       <svg class="bluetooth" viewBox="0 0 12 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter" aria-hidden="true"><path d="M1 5L11 15 6 20V2L11 7 1 17"/></svg>
       <svg class="wifi" viewBox="0 0 26 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 5Q13-4 25 5M4.5 9Q13 2.5 21.5 9M8 13Q13 9 18 13"/><path d="M11 16Q13 14.5 15 16L13 19Z" fill="currentColor" stroke="none"/></svg>
@@ -84,6 +87,7 @@
         <button class="dock-app" data-open="music" aria-label="Music" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Music.svg" alt="" width="512" height="512" draggable="false"><span>Music</span><i></i></button>
         <button class="dock-app" data-open="youtube" aria-label="YouTube" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/YouTube.svg" alt="" width="512" height="512" draggable="false"><span>YouTube</span><i></i></button>
         <button class="dock-app" data-open="play" aria-label="Games" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/gamecenter.png" alt="" width="512" height="512" draggable="false"><span>Games</span><i></i></button>
+        <button class="dock-app" data-open="wallpapers" aria-label="Wallpapers" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Wallpapers.svg" alt="" width="512" height="512" draggable="false"><span>Wallpapers</span><i></i></button>
         <span class="dock-divider" aria-hidden="true"></span>
         <button class="dock-app" data-open="guestbook" aria-label="Notes · Guestbook and drawings" aria-haspopup="dialog"><img class="app-icon" src="assets/icons/Notes.png" alt="" width="512" height="512" draggable="false"><span>Notes</span><i></i></button>
       </nav>
@@ -137,6 +141,7 @@
       <button data-open="music" aria-haspopup="dialog"><img src="assets/icons/Music.svg" alt="" width="64" height="64" draggable="false"><span>Music</span></button>
       <button data-open="youtube" aria-haspopup="dialog"><img src="assets/icons/YouTube.svg" alt="" width="64" height="64" draggable="false"><span>YouTube</span></button>
       <button data-open="play" aria-haspopup="dialog"><img src="assets/icons/gamecenter.png" alt="" width="64" height="64" draggable="false"><span>Games</span></button>
+      <button data-open="wallpapers" aria-haspopup="dialog"><img src="assets/icons/Wallpapers.svg" alt="" width="64" height="64" draggable="false"><span>Wallpapers</span></button>
       <button data-open="guestbook" aria-haspopup="dialog"><img src="assets/icons/Notes.png" alt="" width="64" height="64" draggable="false"><span>Notes</span></button>
     </div>
   </template>
@@ -241,6 +246,22 @@
       <section class="music-library" aria-label="Songs">
         <table class="music-song-table"><thead><tr><th class="music-number-heading" scope="col"><span class="music-sr-only">Track</span></th><th scope="col">Name</th><th class="music-time-heading" scope="col">Time</th><th class="music-store-heading" scope="col"><span class="music-sr-only">Full song</span></th></tr></thead><tbody></tbody></table>
       </section>
+    </div>
+  </template>
+
+  <template id="view-wallpapers">
+    <div class="wallpapers-app">
+      <div class="wallpapers-intro">
+        <div><h3>Choose a moving desktop</h3><p>Each wallpaper responds to your pointer. Click the desktop to make a ripple.</p></div>
+        <label class="wallpaper-motion-toggle"><span>Motion</span><input type="checkbox" data-wallpaper-motion aria-label="Animate wallpaper"><i aria-hidden="true"></i></label>
+      </div>
+      <div class="wallpaper-grid" role="group" aria-label="Dynamic wallpapers">
+        <button class="wallpaper-choice" data-wallpaper-id="yosemite" aria-pressed="false"><span class="wallpaper-preview wallpaper-preview-yosemite"><i></i></span><strong>Yosemite Breeze</strong><small>Floating light · gentle depth</small><b aria-hidden="true">✓</b></button>
+        <button class="wallpaper-choice" data-wallpaper-id="aurora" aria-pressed="false"><span class="wallpaper-preview wallpaper-preview-aurora"><i></i></span><strong>Aurora Drift</strong><small>Silk ribbons · cursor glow</small><b aria-hidden="true">✓</b></button>
+        <button class="wallpaper-choice" data-wallpaper-id="cosmos" aria-pressed="false"><span class="wallpaper-preview wallpaper-preview-cosmos"><i></i></span><strong>Quiet Cosmos</strong><small>Twinkling stars · parallax</small><b aria-hidden="true">✓</b></button>
+        <button class="wallpaper-choice" data-wallpaper-id="sunset" aria-pressed="false"><span class="wallpaper-preview wallpaper-preview-sunset"><i></i></span><strong>Liquid Sunset</strong><small>Soft bubbles · warm ripples</small><b aria-hidden="true">✓</b></button>
+      </div>
+      <p class="wallpaper-tip"><span aria-hidden="true">✦</span> Move slowly across the desktop to see the layers follow you.</p>
     </div>
   </template>
 

@@ -8,12 +8,13 @@ const appInfo = {
   music: { title: 'My Favorite Music', status: '3 Songs' },
   youtube: { title: 'My Favorite Movie', status: '6 Movies' },
   play: { title: 'Game Center', status: 'Memory Match · 1 of 3' },
+  wallpapers: { title: 'Dynamic Wallpapers', status: '4 interactive wallpapers' },
   guestbook: { title: 'Notes', status: 'Shared guestbook' },
   textedit: { title: 'Welcome.txt', status: 'Plain text document' }
 };
 const finderPages = {
   about: { title: 'About', template: 'finder-about-content', status: 'About Alex' },
-  applications: { title: 'Applications', template: 'finder-applications-content', status: '6 items' },
+  applications: { title: 'Applications', template: 'finder-applications-content', status: '7 items' },
   desktop: { title: 'Desktop', template: 'finder-desktop-content', status: '1 item' },
   welcome: { title: 'Welcome!', template: 'finder-welcome-content', status: '1 item', sidebar: 'desktop', location: 'Desktop › Welcome!' }
 };
@@ -186,6 +187,7 @@ function openApp(name, trigger) {
   element.classList.toggle('is-music', name === 'music');
   element.classList.toggle('is-youtube', name === 'youtube');
   element.classList.toggle('is-games', name === 'play');
+  element.classList.toggle('is-wallpapers', name === 'wallpapers');
   element.classList.toggle('is-textedit', name === 'textedit');
   const state = { key, name, element, returnFocus, controller: new AbortController(), order: 0, x: 8, y: 32 };
   state.content = element.querySelector('.window-content');
@@ -224,6 +226,7 @@ function openApp(name, trigger) {
   if (name === 'music') state.dispose = window.Music.mount(state.content.querySelector('.music-app'), setStatus);
   if (name === 'youtube') state.dispose = window.Movies.mount(state.content.querySelector('.movies-app'), setStatus);
   if (name === 'play') state.dispose = window.Games.mount(state.content.querySelector('.games-app'), setStatus);
+  if (name === 'wallpapers') state.dispose = window.Wallpapers.mount(state.content.querySelector('.wallpapers-app'), setStatus);
   if (name === 'textedit') loadWelcomeFile(state);
   activateWindow(state, true);
 }

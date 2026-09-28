@@ -1,0 +1,91 @@
+/* Interactive desktop wallpaper engine and its Yosemite-style chooser. */
+.wallpaper{
+  --wallpaper-shift-x:0px;--wallpaper-shift-y:0px;
+  overflow:hidden;transform:none;background:#8e87aa;isolation:isolate;
+  transition:background-color .7s ease;
+}
+.wallpaper-scene,.wallpaper-canvas,.wallpaper-vignette{position:absolute;inset:-4%;width:108%;height:108%}
+.wallpaper-scene{
+  z-index:0;background-position:center;background-size:cover;
+  transform:translate3d(var(--wallpaper-shift-x),var(--wallpaper-shift-y),0) scale(1.035);
+  transition:background .75s ease,filter .75s ease,transform .22s ease-out;
+  will-change:transform,filter;
+}
+.wallpaper-canvas{inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.wallpaper-vignette{z-index:2;pointer-events:none;background:linear-gradient(180deg,#34235b12 0,#1e244209 46%,#11152e50 100%)}
+.wallpaper[data-wallpaper="yosemite"] .wallpaper-scene{
+  background-image:linear-gradient(180deg,#3c265515,#21274208 42%,#15182f3d),url("assets/yosemite-dusk.jpg");
+}
+.wallpaper[data-wallpaper="aurora"]{background:#081b35}
+.wallpaper[data-wallpaper="aurora"] .wallpaper-scene{
+  background:
+    radial-gradient(ellipse at 22% 15%,#7af7ddc2 0,transparent 32%),
+    radial-gradient(ellipse at 74% 30%,#b064ffc2 0,transparent 40%),
+    linear-gradient(155deg,#07142c 5%,#153b5d 45%,#19214e 70%,#090d28 100%);
+  animation:wallpaper-breathe 9s ease-in-out infinite alternate;
+}
+.wallpaper[data-wallpaper="cosmos"]{background:#020719}
+.wallpaper[data-wallpaper="cosmos"] .wallpaper-scene{
+  background:
+    radial-gradient(circle at 70% 35%,#7764cf59 0,transparent 27%),
+    radial-gradient(circle at 18% 70%,#1d6da94d 0,transparent 26%),
+    linear-gradient(145deg,#020617,#08132e 55%,#120b2f);
+}
+.wallpaper[data-wallpaper="sunset"]{background:#bd6d7d}
+.wallpaper[data-wallpaper="sunset"] .wallpaper-scene{
+  background:
+    radial-gradient(circle at 28% 26%,#ffe7a6 0 8%,transparent 30%),
+    radial-gradient(circle at 78% 18%,#e77ea4 0 12%,transparent 38%),
+    radial-gradient(circle at 52% 88%,#5e70ba 0 19%,transparent 52%),
+    linear-gradient(155deg,#f3bd8b,#df7793 48%,#775f9f 78%,#334b7c);
+  animation:wallpaper-drift 12s ease-in-out infinite alternate;
+}
+.wallpaper.motion-off .wallpaper-scene{animation:none!important;transition:none;transform:scale(1.035)}
+@keyframes wallpaper-breathe{from{filter:hue-rotate(-8deg) saturate(.94)}to{filter:hue-rotate(12deg) saturate(1.14)}}
+@keyframes wallpaper-drift{from{filter:hue-rotate(-5deg) brightness(.98)}to{filter:hue-rotate(8deg) brightness(1.07)}}
+
+.app-window.is-wallpapers{width:min(780px,calc(100vw - 60px));height:min(590px,calc(100dvh - 110px))}
+.app-window.is-wallpapers .window-content{padding:0;background:#f3f3f3;overflow:auto}
+.app-window.is-wallpapers .window-status{background:#e8e8e8}
+.wallpapers-app{min-height:100%;padding:30px 34px 26px;color:#353535}
+.wallpapers-intro{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 0 25px}
+.wallpapers-intro h3{margin:0 0 4px!important;font-size:22px!important;line-height:1.25!important;letter-spacing:-.02em!important;font-weight:500!important}
+.wallpapers-intro p{margin:0;color:#777;font-size:13px;line-height:1.5}
+.wallpaper-motion-toggle{display:flex;align-items:center;gap:9px;color:#555;font-size:13px;user-select:none;cursor:pointer;flex-shrink:0}
+.wallpaper-motion-toggle input{position:absolute;opacity:0;pointer-events:none}
+.wallpaper-motion-toggle i{position:relative;width:38px;height:22px;border:1px solid #aaa;border-radius:12px;background:#c5c5c5;box-shadow:inset 0 1px 2px #0002;transition:background .15s,border-color .15s}
+.wallpaper-motion-toggle i:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:linear-gradient(#fff,#e6e6e6);box-shadow:0 1px 2px #0005;transition:transform .18s ease}
+.wallpaper-motion-toggle input:checked+i{background:#3a8fdf;border-color:#2776c5}
+.wallpaper-motion-toggle input:checked+i:after{transform:translateX(16px)}
+.wallpaper-motion-toggle input:focus-visible+i{outline:2px solid #2878cf;outline-offset:2px}
+.wallpaper-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.wallpaper-choice{position:relative;min-width:0;padding:8px 8px 12px;text-align:left;background:#fff;border:1px solid #cfcfcf;border-radius:5px;color:#333;box-shadow:0 1px 2px #0000000d;transition:border-color .15s,box-shadow .15s,transform .15s}
+.wallpaper-choice:hover{border-color:#a7a7a7;box-shadow:0 3px 8px #0002;transform:translateY(-1px)}
+.wallpaper-choice[aria-pressed="true"]{border-color:#2d7fd3;box-shadow:0 0 0 2px #2d7fd338,0 3px 8px #0002}
+.wallpaper-choice>b{position:absolute;right:14px;bottom:14px;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#2f86dd;color:#fff;font-size:13px;opacity:0;transform:scale(.7);transition:opacity .15s,transform .15s}
+.wallpaper-choice[aria-pressed="true"]>b{opacity:1;transform:scale(1)}
+.wallpaper-choice strong,.wallpaper-choice small{display:block;padding-left:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wallpaper-choice strong{margin-top:9px;font-size:13px;font-weight:500}
+.wallpaper-choice small{margin-top:2px;color:#888;font-size:11px;padding-right:28px}
+.wallpaper-preview{position:relative;display:block;overflow:hidden;width:100%;aspect-ratio:16/8.7;border-radius:3px;background:#777;box-shadow:inset 0 0 0 1px #0002}
+.wallpaper-preview:before,.wallpaper-preview:after,.wallpaper-preview i{content:"";position:absolute;display:block}
+.wallpaper-preview-yosemite{background:linear-gradient(180deg,#6b638f10,#28345a55),url("assets/yosemite-dusk.jpg") center/cover}
+.wallpaper-preview-yosemite:after{inset:0;background:radial-gradient(circle at 35% 38%,#fff6 0 1px,transparent 2px),radial-gradient(circle at 70% 25%,#fff8 0 1px,transparent 2px);background-size:38px 32px,51px 41px;animation:preview-sparkle 3s ease-in-out infinite alternate}
+.wallpaper-preview-aurora{background:linear-gradient(145deg,#07142c,#17485f 55%,#191643)}
+.wallpaper-preview-aurora:before{inset:-20% -10%;background:radial-gradient(ellipse at 35% 20%,#67f8d9cc,transparent 40%),radial-gradient(ellipse at 72% 40%,#a354f3b8,transparent 45%);animation:preview-aurora 5s ease-in-out infinite alternate}
+.wallpaper-preview-cosmos{background:radial-gradient(circle at 68% 34%,#785dca55,transparent 26%),linear-gradient(145deg,#020617,#0a1533 60%,#160c31)}
+.wallpaper-preview-cosmos:after{inset:0;background-image:radial-gradient(#fff 0 1px,transparent 1.6px),radial-gradient(#bcd7ff 0 1px,transparent 1.6px);background-position:0 0,22px 18px;background-size:39px 39px,53px 53px;animation:preview-sparkle 2s ease-in-out infinite alternate}
+.wallpaper-preview-sunset{background:radial-gradient(circle at 28% 28%,#ffe6a5 0 8%,transparent 27%),radial-gradient(circle at 78% 18%,#e375a0 0 14%,transparent 39%),linear-gradient(145deg,#efb47f,#d96f91 52%,#40578a)}
+.wallpaper-preview-sunset:before{width:76px;height:76px;border-radius:50%;left:48%;top:30%;background:#ffcfa53d;box-shadow:54px 24px 0 #6f73c340,-64px 29px 0 #ffd6a52d;animation:preview-float 4.5s ease-in-out infinite alternate}
+.wallpaper-tip{display:flex;align-items:center;justify-content:center;gap:7px;margin:22px 0 0;color:#858585;font-size:12px}.wallpaper-tip span{color:#647fc1}
+@keyframes preview-sparkle{from{opacity:.4;transform:translateY(0)}to{opacity:1;transform:translateY(-3px)}}
+@keyframes preview-aurora{from{transform:translate3d(-3%,1%,0) rotate(-3deg)}to{transform:translate3d(5%,-2%,0) rotate(4deg)}}
+@keyframes preview-float{from{transform:translate(-6px,4px) scale(.94)}to{transform:translate(8px,-5px) scale(1.08)}}
+
+@media(max-width:600px){
+  .app-window.is-wallpapers{width:calc(100vw - 16px);height:calc(100dvh - var(--workspace-top) - var(--workspace-bottom))}
+  .wallpapers-app{padding:22px 16px 20px}.wallpapers-intro{align-items:flex-start;margin-bottom:18px}.wallpapers-intro h3{font-size:18px!important}.wallpapers-intro p{font-size:12px;max-width:230px}.wallpaper-motion-toggle>span{display:none}
+  .wallpaper-grid{gap:12px}.wallpaper-choice{padding:6px 6px 10px}.wallpaper-choice strong{font-size:12px}.wallpaper-choice small{font-size:10px}.wallpaper-tip{font-size:11px;margin-top:18px;text-align:center}
+}
+@media(max-width:370px){.wallpaper-grid{grid-template-columns:1fr}.wallpaper-preview{aspect-ratio:16/6}.wallpapers-intro p{max-width:220px}}
+@media(prefers-reduced-motion:reduce){.wallpaper-scene,.wallpaper-preview:before,.wallpaper-preview:after,.wallpaper-preview i{animation:none!important;transition:none!important}}
