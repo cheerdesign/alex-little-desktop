@@ -96,13 +96,13 @@
     repeating-linear-gradient(0deg,#fff8 0 2px,#7772 2px 4px,transparent 4px 14px),
     linear-gradient(135deg,#f5f5f3,#cbc8c5 52%,#eee9e5);
 }
-.wallpaper-preview-glass:before{left:50%;top:52%;width:148px;height:116px;border-radius:48% 46% 42% 44%;background:radial-gradient(circle at 42% 38%,#fff9 0 12%,#ad9f9652 46%,transparent 72%);filter:blur(6px);transform:translate(-50%,-50%);animation:preview-press 3.8s ease-in-out infinite alternate}
+.wallpaper-preview-glass:before{left:50%;top:52%;width:238px;height:126px;border-radius:45%;background:radial-gradient(ellipse at 27% 65%,#f9fafb 0 19%,#b9c0c5 25%,transparent 28%),radial-gradient(ellipse at 38% 42%,#fff 0 23%,#bdc4c9 29%,transparent 32%),radial-gradient(ellipse at 53% 30%,#fff 0 26%,#b5bdc3 32%,transparent 35%),radial-gradient(ellipse at 69% 46%,#f8fafb 0 24%,#aeb8c0 31%,transparent 34%),radial-gradient(ellipse at 77% 67%,#eef1f3 0 19%,#9faab2 26%,transparent 29%),radial-gradient(ellipse at 51% 70%,#edf1f3 0 38%,#98a5ae 48%,transparent 51%);filter:drop-shadow(0 14px 8px #615b5740);transform:translate(-50%,-50%);animation:preview-press 3.8s ease-in-out infinite alternate}
 .wallpaper-preview-glass:after{inset:0;background:repeating-linear-gradient(90deg,transparent 0 10px,#fff8 10px 12px,#776f681f 12px 14px),repeating-linear-gradient(0deg,transparent 0 10px,#fff8 10px 12px,#776f681f 12px 14px);mix-blend-mode:multiply;opacity:.5}
 .wallpaper-tip{display:flex;align-items:center;justify-content:center;gap:7px;margin:22px 0 0;color:#858585;font-size:12px}.wallpaper-tip span{color:#647fc1}
 @keyframes preview-sparkle{from{opacity:.4;transform:translateY(0)}to{opacity:1;transform:translateY(-3px)}}
 @keyframes preview-aurora{from{transform:translate3d(-3%,1%,0) rotate(-3deg)}to{transform:translate3d(5%,-2%,0) rotate(4deg)}}
 @keyframes preview-float{from{transform:translate(-6px,4px) scale(.94)}to{transform:translate(8px,-5px) scale(1.08)}}
-@keyframes preview-press{from{transform:translate(-58%,-48%) scale(.9);opacity:.62}to{transform:translate(-42%,-52%) scale(1.12);opacity:1}}
+@keyframes preview-press{from{transform:translate(-55%,-48%) scale(.92);opacity:.76}to{transform:translate(-45%,-52%) scale(1.04);opacity:1}}
 
 @media(max-width:600px){
   .app-window.is-wallpapers{width:calc(100vw - 16px);height:calc(100dvh - var(--workspace-top) - var(--workspace-bottom))}

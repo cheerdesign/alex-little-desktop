@@ -4,6 +4,8 @@
   if (!wallpaper || !canvas) return;
 
   const context = canvas.getContext('2d', { alpha: true });
+  const cloudLayer = document.createElement('canvas');
+  const cloudContext = cloudLayer.getContext('2d', { alpha: true });
   const themes = {
     yosemite: { title: 'Yosemite Breeze' },
     aurora: { title: 'Aurora Drift' },
@@ -23,6 +25,7 @@
   let lastTime = performance.now();
   let cssWidth = innerWidth;
   let cssHeight = innerHeight;
+  let pixelRatio = 1;
   let pointer = { x: innerWidth / 2, y: innerHeight / 2, smoothX: innerWidth / 2, smoothY: innerHeight / 2, energy: 0 };
   const ripples = [];
   const motes = Array.from({ length: 72 }, () => ({
@@ -34,12 +37,15 @@
   function resize() {
     cssWidth = innerWidth;
     cssHeight = innerHeight;
-    const ratio = Math.min(devicePixelRatio || 1, 1.75);
-    canvas.width = Math.max(1, Math.round(cssWidth * ratio));
-    canvas.height = Math.max(1, Math.round(cssHeight * ratio));
+    pixelRatio = Math.min(devicePixelRatio || 1, 1.75);
+    canvas.width = Math.max(1, Math.round(cssWidth * pixelRatio));
+    canvas.height = Math.max(1, Math.round(cssHeight * pixelRatio));
+    cloudLayer.width = canvas.width;
+    cloudLayer.height = canvas.height;
     canvas.style.width = `${cssWidth}px`;
     canvas.style.height = `${cssHeight}px`;
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    cloudContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     requestDraw();
   }
 
@@ -139,69 +145,126 @@
     }
   }
 
+  function paintCloud(time, centerX, centerY) {
+    cloudContext.clearRect(0, 0, cssWidth, cssHeight);
+    const scale = Math.max(.68, Math.min(1.08, Math.min(cssWidth / 920, cssHeight / 620)));
+    const bob = Math.sin(time * .00115) * 4;
+    const lobes = [
+      { dx: -112, dy: 22, rx: 82, ry: 57 },
+      { dx: -70, dy: -20, rx: 72, ry: 66 },
+      { dx: -13, dy: -49, rx: 82, ry: 78 },
+      { dx: 53, dy: -33, rx: 78, ry: 72 },
+      { dx: 105, dy: 10, rx: 72, ry: 58 },
+      { dx: 18, dy: 26, rx: 132, ry: 69 }
+    ].map(lobe => ({
+      x: centerX + lobe.dx * scale,
+      y: centerY + (lobe.dy + bob) * scale,
+      rx: lobe.rx * scale,
+      ry: lobe.ry * scale
+    }));
+
+    cloudContext.save();
+    cloudContext.translate(centerX, centerY + 83 * scale);
+    cloudContext.scale(1, .32);
+    const shadow = cloudContext.createRadialGradient(0, 0, 8, 0, 0, 150 * scale);
+    shadow.addColorStop(0, 'rgba(73,66,62,.26)');
+    shadow.addColorStop(1, 'rgba(73,66,62,0)');
+    cloudContext.fillStyle = shadow;
+    cloudContext.beginPath();
+    cloudContext.arc(0, 0, 150 * scale, 0, Math.PI * 2);
+    cloudContext.fill();
+    cloudContext.restore();
+
+    for (const lobe of lobes) {
+      cloudContext.save();
+      cloudContext.translate(lobe.x, lobe.y);
+      cloudContext.scale(lobe.rx, lobe.ry);
+      const volume = cloudContext.createRadialGradient(-.28, -.34, .04, .05, .08, 1.05);
+      volume.addColorStop(0, 'rgba(255,255,255,.98)');
+      volume.addColorStop(.36, 'rgba(246,247,247,.97)');
+      volume.addColorStop(.69, 'rgba(211,216,219,.96)');
+      volume.addColorStop(.9, 'rgba(160,170,178,.92)');
+      volume.addColorStop(1, 'rgba(124,137,148,.82)');
+      cloudContext.fillStyle = volume;
+      cloudContext.beginPath();
+      cloudContext.arc(0, 0, 1, 0, Math.PI * 2);
+      cloudContext.fill();
+      cloudContext.strokeStyle = 'rgba(255,255,255,.36)';
+      cloudContext.lineWidth = 1 / Math.max(lobe.rx, lobe.ry);
+      cloudContext.stroke();
+      cloudContext.restore();
+    }
+
+    cloudContext.save();
+    cloudContext.globalCompositeOperation = 'screen';
+    const glow = cloudContext.createRadialGradient(centerX - 55 * scale, centerY - 64 * scale, 0, centerX - 30 * scale, centerY - 28 * scale, 155 * scale);
+    glow.addColorStop(0, 'rgba(255,255,255,.44)');
+    glow.addColorStop(1, 'rgba(255,255,255,0)');
+    cloudContext.fillStyle = glow;
+    cloudContext.fillRect(centerX - 220 * scale, centerY - 160 * scale, 440 * scale, 300 * scale);
+    cloudContext.restore();
+    return { lobes, scale, bob };
+  }
+
   function drawGlass(time) {
     const centerX = pointer.smoothX;
     const centerY = pointer.smoothY;
-    const pulse = 1 + Math.sin(time * .0017) * .025;
-    const strength = (.66 + pointer.energy * .34) * pulse;
-    const lobes = [
-      { x: centerX, y: centerY + 32, radius: 104 },
-      { x: centerX - 73, y: centerY - 49, radius: 43 },
-      { x: centerX - 30, y: centerY - 82, radius: 45 },
-      { x: centerX + 17, y: centerY - 88, radius: 44 },
-      { x: centerX + 59, y: centerY - 65, radius: 41 },
-      { x: centerX + 88, y: centerY + 2, radius: 46 }
-    ];
+    const { lobes, scale } = paintCloud(time, centerX, centerY);
+    const strength = .72 + pointer.energy * .28;
 
     context.save();
-    context.filter = 'blur(16px)';
-    context.fillStyle = `rgba(103,91,83,${.12 * strength})`;
-    for (const lobe of lobes) {
-      context.beginPath();
-      context.arc(lobe.x, lobe.y, lobe.radius * .86, 0, Math.PI * 2);
-      context.fill();
-    }
+    context.globalAlpha = .38;
+    context.filter = 'blur(6px)';
+    context.drawImage(cloudLayer, 0, 0, cloudLayer.width, cloudLayer.height, 0, 0, cssWidth, cssHeight);
     context.filter = 'none';
-
-    const highlight = context.createRadialGradient(centerX - 18, centerY - 28, 10, centerX, centerY, 190);
-    highlight.addColorStop(0, `rgba(255,255,255,${.34 * strength})`);
-    highlight.addColorStop(.48, `rgba(255,250,246,${.13 * strength})`);
-    highlight.addColorStop(.72, `rgba(119,108,100,${.08 * strength})`);
-    highlight.addColorStop(1, 'rgba(255,255,255,0)');
-    context.fillStyle = highlight;
-    context.fillRect(centerX - 220, centerY - 220, 440, 440);
+    context.globalAlpha = 1;
 
     const cell = 15;
-    const reach = 175;
-    const startX = Math.floor((centerX - reach) / cell) * cell;
-    const endX = Math.ceil((centerX + reach) / cell) * cell;
-    const startY = Math.floor((centerY - reach) / cell) * cell;
-    const endY = Math.ceil((centerY + reach) / cell) * cell;
+    const reachX = 215 * scale;
+    const reachY = 155 * scale;
+    const startX = Math.floor((centerX - reachX) / cell) * cell;
+    const endX = Math.ceil((centerX + reachX) / cell) * cell;
+    const startY = Math.floor((centerY - reachY) / cell) * cell;
+    const endY = Math.ceil((centerY + reachY) / cell) * cell;
     for (let y = startY; y <= endY; y += cell) {
       for (let x = startX; x <= endX; x += cell) {
         const sampleX = x + cell / 2;
         const sampleY = y + cell / 2;
         let influence = 0;
         for (const lobe of lobes) {
-          const distance = Math.hypot(sampleX - lobe.x, sampleY - lobe.y);
-          influence = Math.max(influence, Math.max(0, 1 - distance / lobe.radius));
+          const distance = Math.hypot((sampleX - lobe.x) / lobe.rx, (sampleY - lobe.y) / lobe.ry);
+          influence = Math.max(influence, Math.max(0, 1 - distance / 1.28));
         }
         if (influence <= 0) continue;
         const dx = sampleX - centerX;
         const dy = sampleY - centerY;
         const distance = Math.max(1, Math.hypot(dx, dy));
-        const bend = Math.pow(influence, 1.55) * 16 * strength;
-        const shimmer = Math.sin(distance * .12 - time * .0022) * influence * 2.1;
-        const offsetX = dx / distance * (bend + shimmer);
-        const offsetY = dy / distance * (bend + shimmer);
-        const alpha = .08 + influence * .2;
+        const bend = Math.pow(influence, 1.45) * 19 * strength;
+        const shimmer = Math.sin(distance * .115 - time * .0019) * influence * 2.5;
+        const offsetX = dx / distance * (bend + shimmer) + Math.sin(y * .075) * influence * 2;
+        const offsetY = dy / distance * (bend + shimmer) + Math.cos(x * .065) * influence * 1.4;
+        const sourceX = Math.max(0, Math.min(cssWidth - cell, x + offsetX));
+        const sourceY = Math.max(0, Math.min(cssHeight - cell, y + offsetY));
+        context.drawImage(
+          cloudLayer,
+          sourceX * pixelRatio, sourceY * pixelRatio, cell * pixelRatio, cell * pixelRatio,
+          x + 1, y + 1, cell - 2, cell - 2
+        );
+        const alpha = .04 + influence * .12;
         context.fillStyle = `rgba(255,255,255,${alpha})`;
-        context.strokeStyle = `rgba(93,84,79,${.08 + influence * .12})`;
-        context.lineWidth = .7;
-        context.fillRect(x + offsetX + 1, y + offsetY + 1, cell - 2, cell - 2);
-        context.strokeRect(x + offsetX + 1.5, y + offsetY + 1.5, cell - 3, cell - 3);
+        context.strokeStyle = `rgba(91,87,84,${.09 + influence * .13})`;
+        context.lineWidth = .65;
+        context.fillRect(x + 1, y + 1, cell - 2, cell - 2);
+        context.strokeRect(x + 1.5, y + 1.5, cell - 3, cell - 3);
       }
     }
+
+    const sheen = context.createRadialGradient(centerX - 58 * scale, centerY - 58 * scale, 4, centerX, centerY, 205 * scale);
+    sheen.addColorStop(0, 'rgba(255,255,255,.28)');
+    sheen.addColorStop(.5, 'rgba(255,255,255,.05)');
+    sheen.addColorStop(1, 'rgba(255,255,255,0)');
+    context.fillStyle = sheen;
+    context.fillRect(centerX - reachX, centerY - reachY, reachX * 2, reachY * 2);
     context.restore();
   }
 
