@@ -4,12 +4,19 @@
   overflow:hidden;transform:none;background:#8e87aa;isolation:isolate;
   transition:background-color .7s ease;
 }
-.wallpaper-scene,.wallpaper-canvas,.wallpaper-vignette{position:absolute;inset:-4%;width:108%;height:108%}
+.wallpaper-scene,.wallpaper-video,.wallpaper-canvas,.wallpaper-vignette{position:absolute;inset:-4%;width:108%;height:108%}
 .wallpaper-scene{
   z-index:0;background-position:center;background-size:cover;
   transform:translate3d(var(--wallpaper-shift-x),var(--wallpaper-shift-y),0) scale(1.035);
   transition:background .75s ease,filter .75s ease,transform .22s ease-out;
   will-change:transform,filter;
+}
+.wallpaper-video{
+  z-index:0;display:block;object-fit:cover;object-position:center;border:0;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translate3d(var(--wallpaper-shift-x),var(--wallpaper-shift-y),0) scale(1.035);
+  transition:opacity .8s ease,transform .22s ease-out;
+  will-change:transform,opacity;
 }
 .wallpaper-canvas{inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .wallpaper-vignette{z-index:2;pointer-events:none;background:linear-gradient(180deg,#34235b12 0,#1e244209 46%,#11152e50 100%)}
@@ -24,6 +31,9 @@
     linear-gradient(155deg,#07142c 5%,#153b5d 45%,#19214e 70%,#090d28 100%);
   animation:wallpaper-breathe 9s ease-in-out infinite alternate;
 }
+.wallpaper[data-wallpaper="aurora"].video-ready .wallpaper-video{opacity:1;visibility:visible}
+.wallpaper[data-wallpaper="aurora"].video-ready .wallpaper-scene{opacity:0}
+.wallpaper[data-wallpaper="aurora"] .wallpaper-vignette{background:linear-gradient(180deg,#0712291f 0,transparent 48%,#02071245 100%)}
 .wallpaper[data-wallpaper="cosmos"]{background:#020719}
 .wallpaper[data-wallpaper="cosmos"] .wallpaper-scene{
   background:
@@ -51,6 +61,7 @@
 }
 .wallpaper[data-wallpaper="galaxy"] .wallpaper-vignette{background:radial-gradient(ellipse at center,transparent 35%,#01020d80 100%)}
 .wallpaper.motion-off .wallpaper-scene{animation:none!important;transition:none;transform:scale(1.035)}
+.wallpaper.motion-off .wallpaper-video{transition:none;transform:scale(1.035)}
 @keyframes wallpaper-breathe{from{filter:hue-rotate(-8deg) saturate(.94)}to{filter:hue-rotate(12deg) saturate(1.14)}}
 @keyframes wallpaper-drift{from{filter:hue-rotate(-5deg) brightness(.98)}to{filter:hue-rotate(8deg) brightness(1.07)}}
 @keyframes galaxy-breathe{from{filter:hue-rotate(-5deg) brightness(.92)}to{filter:hue-rotate(6deg) brightness(1.06)}}
@@ -82,8 +93,8 @@
 .wallpaper-preview:before,.wallpaper-preview:after,.wallpaper-preview i{content:"";position:absolute;display:block}
 .wallpaper-preview-yosemite{background:linear-gradient(180deg,#6b638f10,#28345a55),url("assets/yosemite-dusk.jpg") center/cover}
 .wallpaper-preview-yosemite:after{inset:0;background:radial-gradient(circle at 35% 38%,#fff6 0 1px,transparent 2px),radial-gradient(circle at 70% 25%,#fff8 0 1px,transparent 2px);background-size:38px 32px,51px 41px;animation:preview-sparkle 3s ease-in-out infinite alternate}
-.wallpaper-preview-aurora{background:linear-gradient(145deg,#07142c,#17485f 55%,#191643)}
-.wallpaper-preview-aurora:before{inset:-20% -10%;background:radial-gradient(ellipse at 35% 20%,#67f8d9cc,transparent 40%),radial-gradient(ellipse at 72% 40%,#a354f3b8,transparent 45%);animation:preview-aurora 5s ease-in-out infinite alternate}
+.wallpaper-preview-aurora{background:linear-gradient(180deg,#0a1b37 0 45%,#243d52 46% 58%,#101d25 59%),linear-gradient(145deg,#07142c,#17485f 55%,#191643)}
+.wallpaper-preview-aurora:before{inset:0;background:radial-gradient(ellipse at 67% 38%,#e9edf1 0 2%,#b8c7de22 3% 14%,transparent 15%),linear-gradient(163deg,transparent 0 48%,#7b90a31f 49% 54%,transparent 55%),radial-gradient(ellipse at 45% 78%,#5f7d694f 0 22%,transparent 23%);animation:preview-aurora 7s ease-in-out infinite alternate}
 .wallpaper-preview-cosmos{background:radial-gradient(circle at 68% 34%,#785dca55,transparent 26%),linear-gradient(145deg,#020617,#0a1533 60%,#160c31)}
 .wallpaper-preview-cosmos:after{inset:0;background-image:radial-gradient(#fff 0 1px,transparent 1.6px),radial-gradient(#bcd7ff 0 1px,transparent 1.6px);background-position:0 0,22px 18px;background-size:39px 39px,53px 53px;animation:preview-sparkle 2s ease-in-out infinite alternate}
 .wallpaper-preview-sunset{background:radial-gradient(circle at 28% 28%,#ffe6a5 0 8%,transparent 27%),radial-gradient(circle at 78% 18%,#e375a0 0 14%,transparent 39%),linear-gradient(145deg,#efb47f,#d96f91 52%,#40578a)}

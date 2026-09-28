@@ -1,6 +1,7 @@
 (() => {
   const wallpaper = document.querySelector('.wallpaper');
   const canvas = wallpaper?.querySelector('.wallpaper-canvas');
+  const video = wallpaper?.querySelector('.wallpaper-video');
   if (!wallpaper || !canvas) return;
 
   const context = canvas.getContext('2d', { alpha: true });
@@ -20,6 +21,7 @@
   const savedTheme = safeStorage.get('alex.wallpaper.theme');
   let theme = savedTheme === 'glass' ? 'galaxy' : themes[savedTheme] ? savedTheme : 'yosemite';
   let motion = safeStorage.get('alex.wallpaper.motion') === 'off' ? false : !reduceMotion.matches;
+  let videoReady = false;
   let animationFrame = 0;
   let lastTime = performance.now();
   let cssWidth = innerWidth;
@@ -280,7 +282,7 @@
     updatePointerStyle();
     context.clearRect(0, 0, cssWidth, cssHeight);
     if (theme === 'yosemite') drawYosemite(now);
-    if (theme === 'aurora') drawAurora(now);
+    if (theme === 'aurora' && !videoReady) drawAurora(now);
     if (theme === 'cosmos') drawCosmos(now);
     if (theme === 'sunset') drawSunset(now);
     if (theme === 'galaxy') drawGalaxy(now);
@@ -292,11 +294,23 @@
     if (!animationFrame) animationFrame = requestAnimationFrame(render);
   }
 
+  function syncVideoPlayback() {
+    if (!video) return;
+    const shouldPlay = theme === 'aurora' && motion && !document.hidden;
+    if (theme === 'aurora' && !video.src) {
+      video.src = video.dataset.src;
+      video.load();
+    }
+    if (shouldPlay) video.play().catch(() => {});
+    else video.pause();
+  }
+
   function select(nextTheme) {
     if (!themes[nextTheme]) return;
     theme = nextTheme;
     wallpaper.dataset.wallpaper = theme;
     safeStorage.set('alex.wallpaper.theme', theme);
+    syncVideoPlayback();
     requestDraw();
     document.dispatchEvent(new CustomEvent('wallpaperchange', { detail: { theme } }));
   }
@@ -307,6 +321,7 @@
     if (remember) safeStorage.set('alex.wallpaper.motion', motion ? 'on' : 'off');
     if (animationFrame) cancelAnimationFrame(animationFrame);
     animationFrame = 0;
+    syncVideoPlayback();
     requestDraw();
   }
 
@@ -343,8 +358,18 @@
     ripples.push({ x: event.clientX, y: event.clientY, started: performance.now() });
     requestDraw();
   }, { passive: true });
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) requestDraw(); });
+  document.addEventListener('visibilitychange', () => { syncVideoPlayback(); if (!document.hidden) requestDraw(); });
   reduceMotion.addEventListener?.('change', event => { if (event.matches && safeStorage.get('alex.wallpaper.motion') === null) setMotion(false, false); });
+
+  video?.addEventListener('loadeddata', () => {
+    videoReady = true;
+    wallpaper.classList.add('video-ready');
+    requestDraw();
+  });
+  video?.addEventListener('error', () => {
+    videoReady = false;
+    wallpaper.classList.remove('video-ready');
+  });
 
   resize();
   select(theme);
